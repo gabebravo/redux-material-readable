@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid, Row, Cell } from 'react-inline-grid'
-import ButtonSet from '../components/ButtonSet'
+import RaisedButton from 'material-ui/RaisedButton'
 
 const h6Styles = {
   boxSizing: 'border-box',
@@ -12,14 +12,22 @@ const h6Styles = {
   fontFamily: 'sans-serif'
 }
 
-const ButtonRow = ({ title = null, btn1, btn2, btn3, btn4 }) => {
+const btnStyle = {
+  marginRight: 10,
+  marginBottom: 10
+}
+
+const ButtonRow = ({ title = null, btn1, btn2, btn3 }) => {
   return (
     <Grid>
       <Row is="start" className="mainpage-spacing">
         <Cell is="middle 2 tablet-4 phone-4"><h6 style={h6Styles}>{title}</h6></Cell>
         <Cell is="middle 5 tablet-4 phone-4">
-          <div><ButtonSet btn1Text={btn1} btn2Text={btn2} />
-            <ButtonSet btn1Text={btn3} btn2Text={btn4} /></div>
+          <div style={{ display: 'inline' }}>
+            <RaisedButton label={`${btn1}`} secondary={true} style={btnStyle} />
+            <RaisedButton label={`${btn2}`} secondary={true} style={btnStyle} />
+            <RaisedButton label={`${btn3}`} secondary={true} style={btnStyle} />
+          </div>
         </Cell>
       </Row>
     </Grid>

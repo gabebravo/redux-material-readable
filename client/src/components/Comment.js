@@ -15,13 +15,10 @@ const styles = {
   },
 };
 
-const MainPost = () => (
-<div>
+const Comment = () => (
   <Card>
-    <CardTitle title="What's Up With Birds" subtitle="01/17/2017 by Joe Smith" />
+    <CardTitle title="Joe Smith" subtitle="01/17/2017" />
     <div style={styles.wrapper}>
-      <Chip style={styles.chip}>React</Chip>
-      <Chip style={styles.chip}>Comments: 22</Chip>
       <Chip style={styles.chip}>Score: 3.5</Chip>
     </div>
     <CardText>
@@ -35,7 +32,6 @@ const MainPost = () => (
       <ButtonSet btn1Text="Edit" btn2Text="Delete" />
     </CardActions>
   </Card>
-  </div>
 );
 
-export default MainPost;
+export default Comment;
