@@ -29,7 +29,6 @@ export class Form extends Component {
           <MenuItem value={'React'} primaryText="React" />
           <MenuItem value={'Redux'} primaryText="Redux" />
           <MenuItem value={'Javascript'} primaryText="Javascript" />
-          <MenuItem value={'Udacity'} primaryText="Udacity" />
         </DropDownMenu>
       </div>
     )

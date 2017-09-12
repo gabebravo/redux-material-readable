@@ -8,6 +8,9 @@ import AddButton from '../components/AddButton'
 import PostList from '../components/PostList'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
+// const uuidv4 = require('uuid/v4');
+// console.log(uuidv4().split('-').join(''))
+
 const titleStyles = {
   boxSizing: 'border-box',
   color: 'rgba(0, 0, 0, 0.54)',
