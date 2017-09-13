@@ -14,8 +14,8 @@ const defaultData = {
     parentDeleted: false 
   },
   "1ec22c59b2924f09b72de634cf87c347": {
-    id: '95b9bdbfe2504887aa8e9b407a766513',
-    parentId: "8xf0y6ziyjabvozdd253nd",
+    id: '1ec22c59b2924f09b72de634cf87c347',
+    parentId: "d14e77f3203745cc9ad08e2eba433fad",
     timestamp: 1469479767190,
     body: 'Comments. Are. Cool.',
     author: 'thingone',

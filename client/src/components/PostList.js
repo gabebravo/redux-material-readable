@@ -29,7 +29,12 @@ class PostList extends Component {
   componentDidMount() {
     fetchComments(this.props.posts)
       .then( result => {
-        this.props.loadComments(result)
+        const filteredComments = result.filter(comment => comment.data.length > 0)
+        const mappedComments = [];
+        filteredComments.map( comment => {
+          mappedComments.push(...comment.data)
+        })
+        this.props.loadComments(mappedComments)
       })
   }
 
