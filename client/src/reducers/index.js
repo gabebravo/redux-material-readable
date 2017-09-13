@@ -1,6 +1,6 @@
 // IMPORT COMBINEREDUCERS FROM REDUX 
 import { combineReducers } from 'redux';
-import { INIT_POSTS, GET_POSTS, GET_COMMENTS } from '../actions/index'; // IMPORT THE ACTIONS
+import { INIT_POSTS, INIT_COMMENTS } from '../actions/index'; // IMPORT THE ACTIONS
 
 const normalizePostArray = (arr) => arr.reduce( (obj, post) => {
   obj[post.id] = post;
@@ -19,10 +19,10 @@ const posts = (state = {}, action) => {
   }
 }
 
-const comments = (state = [], action) => {
+const comments = (state = {}, action) => {
 
   switch (action.type) { 
-    case GET_COMMENTS:
+    case INIT_COMMENTS:
       return state;
     default:
       return state;

@@ -22,26 +22,21 @@ const iconStyles = {
   color: 'rgb(0, 188, 212)'
 }
 
-const Post = () => (
+const Post = ({ id, title, timestamp, author, category, comments, voteScore, body }) => (
   <Card>
     <CardHeader
-      title="What's Up With Birds"
-      subtitle="01/17/2017 by Joe Smith"
+      title={title}
+      subtitle={`${timestamp} by ${author}`}
       avatar={<ViewIcon style={iconStyles} />}
     />
     <div style={styles.wrapper}>
-      <Chip style={styles.chip}>React</Chip>
-      <Chip style={styles.chip}>Comments: 22</Chip>
-      <Chip style={styles.chip}>Score: 3.5</Chip>
+      <Chip style={styles.chip}>{category}</Chip>
+      <Chip style={styles.chip}>{`Comments: ${comments}`}</Chip>
+      <Chip style={styles.chip}>{`Score: ${voteScore}`}</Chip>
     </div>
-    <CardText>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-      Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-      Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
-    </CardText>
+    <CardText>{body}</CardText>
     <CardActions>
-      <ButtonSet btn1Text="Score" btn2Text="Score" svg1={<AddIcon/>} svg2={<RemoveIcon/>} />
+      <ButtonSet id={id} btn1Text="Score" btn2Text="Score" svg1={<AddIcon/>} svg2={<RemoveIcon/>} />
     </CardActions>
   </Card>
 );

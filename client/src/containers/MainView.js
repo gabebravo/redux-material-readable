@@ -9,6 +9,7 @@ import ButtonRow from '../components/ButtonRow'
 import FilterDropdown from '../components/FilterDropdown'
 import AddButton from '../components/AddButton'
 import PostList from '../components/PostList'
+import Spinner from '../components/Spinner'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 // const uuidv4 = require('uuid/v4');
@@ -38,14 +39,17 @@ class MainView extends Component {
     });
   }
 
+  getPostsAsArray = (arr, obj) => {
+    return arr.map( id => {
+      return obj[id];
+    })
+  }
+
   render() {
     const {posts} = this.props.post;
-    if(Array.isArray(posts.allIds)){
-      const postsArr = posts.allIds.map( id => {
-        return posts.byId[id];
-      })
-      console.log(postsArr)
-    }
+    const postsArr = Array.isArray(posts.allIds) ?
+      <PostList posts={this.getPostsAsArray(posts.allIds, posts.byId)} />:
+      <Spinner />;
     return (
     <MuiThemeProvider>
       <div>
@@ -58,7 +62,7 @@ class MainView extends Component {
             <Cell is="middle 3 tablet-4 phone-4"><div><AddButton btnText="Add Post" /></div></Cell>
           </Row>
         </Grid>
-        <PostList/>
+        {postsArr}
       </div>
       </MuiThemeProvider>
     )
@@ -68,6 +72,6 @@ class MainView extends Component {
 const mapStateToProps = post => ({ post });
 const mapDispatchToProps = dispatch => ({
     loadPosts: post => dispatch( initPosts(post)), 
-  });
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainView)
