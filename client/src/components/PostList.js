@@ -1,28 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Post from './Post'
-import { fetchComments } from '../utils'
+import { fetchComments, reduceNumOfComments } from '../utils'
 import { initComments } from '../actions'
 const moment = require('moment');
 
 const convertUnixToDate = timestamp => moment(new Date().setTime(timestamp)).format("MM/DD/YYYY");
-
-const printPosts = arr => {
-  return arr.map( post => {
-    return (
-      <Post 
-        key={post.id}
-        id={post.id}
-        title={post.title}
-        timestamp={convertUnixToDate(post.timestamp)}
-        author={post.author}
-        category={post.category}
-        voteScore={post.voteScore}
-        body={post.body}
-      />
-    )
-  })
-}
 
 class PostList extends Component {
 
@@ -38,10 +21,38 @@ class PostList extends Component {
       })
   }
 
+  printCommentCount = (obj, id) => {
+    console.log('obj', obj)
+    console.log('id', id)
+    return obj[id] || 0;
+  }
+
+  printPosts = arr => {
+    const {comments} = this.props.comment;
+    if(Array.isArray(comments.allIds)){
+      const commentsCount = reduceNumOfComments(comments.allIds);
+      return arr.map( post => {
+        return (
+          <Post 
+            key={post.id}
+            id={post.id}
+            title={post.title}
+            timestamp={convertUnixToDate(post.timestamp)}
+            comments={this.printCommentCount(commentsCount, post.id)}
+            author={post.author}
+            category={post.category}
+            voteScore={post.voteScore}
+            body={post.body}
+          />
+        )
+      })
+    }
+  }
+
   render(){
     return(
       <div>
-        {printPosts(this.props.posts)}
+        {this.printPosts(this.props.posts)}
       </div>
     );
   }

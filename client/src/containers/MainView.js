@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Grid, Row, Cell } from 'react-inline-grid' 
 import { initPosts } from '../actions'
-import { fetchPosts } from '../utils'
+import { fetchPosts, getPostsAsArray } from '../utils'
 import Header from '../components/Header'
 import ButtonRow from '../components/ButtonRow'
 import FilterDropdown from '../components/FilterDropdown'
@@ -42,7 +42,7 @@ class MainView extends Component {
   render() {
     const {posts} = this.props.post;
     const postsArr = Array.isArray(posts.allIds) ?
-      <PostList posts={this.getPostsAsArray(posts.allIds, posts.byId)} />:
+      <PostList posts={getPostsAsArray(posts.allIds, posts.byId)} />:
       <Spinner />;
     return (
     <MuiThemeProvider>
