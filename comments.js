@@ -3,9 +3,9 @@ const clone = require('clone')
 let db = {}
 
 const defaultData = {
-  "894tuq4ut84ut8v4t8wun89g": {
-    id: '894tuq4ut84ut8v4t8wun89g',
-    parentId: "8xf0y6ziyjabvozdd253nd",
+  "04db69a9efec47999f69ebd3796fa75d": {
+    id: '04db69a9efec47999f69ebd3796fa75d',
+    parentId: "5b3a77e65e834294917c5ca6ada9d0db",
     timestamp: 1468166872634,
     body: 'Hi there! I am a COMMENT.',
     author: 'thingtwo',
@@ -13,8 +13,8 @@ const defaultData = {
     deleted: false,
     parentDeleted: false 
   },
-  "8tu4bsun805n8un48ve89": {
-    id: '8tu4bsun805n8un48ve89',
+  "1ec22c59b2924f09b72de634cf87c347": {
+    id: '95b9bdbfe2504887aa8e9b407a766513',
     parentId: "8xf0y6ziyjabvozdd253nd",
     timestamp: 1469479767190,
     body: 'Comments. Are. Cool.',

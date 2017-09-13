@@ -1,16 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux'; // import redux
+import { createStore, applyMiddleware } from 'redux'; // import redux
 import { Provider } from 'react-redux'; // import react-redux Provider
 
 import reducer from './reducers'; // import the reducers
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
+import logger from 'redux-logger';
 
 const store = createStore(
   reducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  applyMiddleware(logger)
 ) // NOTE : the 2nd param is what allows Redux debugging in chrome
 
 ReactDOM.render(

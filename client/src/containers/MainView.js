@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
-import { Grid, Row, Cell } from 'react-inline-grid'
+import { connect } from 'react-redux'
+import { Grid, Row, Cell } from 'react-inline-grid' 
+import axios from 'axios'
+import { initPosts } from '../actions'
+
 import Header from '../components/Header'
 import ButtonRow from '../components/ButtonRow'
-
 import FilterDropdown from '../components/FilterDropdown'
 import AddButton from '../components/AddButton'
 import PostList from '../components/PostList'
@@ -22,8 +25,27 @@ const titleStyles = {
   fontFamily: 'sans-serif'
 }
 
-export default class MainView extends Component {
+class MainView extends Component {
+  componentDidMount() {
+    axios.get('http://localhost:3001/posts', {
+      headers: { 'Authorization': 'readable' }
+    })
+    .then( (response) => {
+      this.props.loadPosts(response.data);
+    })
+    .catch( (response) => {
+      console.log(response);
+    });
+  }
+
   render() {
+    const {posts} = this.props.post;
+    if(Array.isArray(posts.allIds)){
+      const postsArr = posts.allIds.map( id => {
+        return posts.byId[id];
+      })
+      console.log(postsArr)
+    }
     return (
     <MuiThemeProvider>
       <div>
@@ -42,3 +64,10 @@ export default class MainView extends Component {
     )
   }
 }
+
+const mapStateToProps = post => ({ post });
+const mapDispatchToProps = dispatch => ({
+    loadPosts: post => dispatch( initPosts(post)), 
+  });
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainView)

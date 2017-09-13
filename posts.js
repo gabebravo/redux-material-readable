@@ -3,24 +3,34 @@ const clone = require('clone')
 let db = {}
 
 const defaultData = {
-  "8xf0y6ziyjabvozdd253nd": {
-    id: '8xf0y6ziyjabvozdd253nd',
+  "5b3a77e65e834294917c5ca6ada9d0db": {
+    id: '5b3a77e65e834294917c5ca6ada9d0db',
     timestamp: 1467166872634,
-    title: 'Udacity is the best place to learn React',
+    title: 'Learning React is a great skill in 2017',
     body: 'Everyone says so after all.',
     author: 'thingtwo',
     category: 'react',
     voteScore: 6,
     deleted: false 
   },
-  "6ni6ok3ym7mf1p33lnez": {
-    id: '6ni6ok3ym7mf1p33lnez',
+  "95b9bdbfe2504887aa8e9b407a766513": {
+    id: '95b9bdbfe2504887aa8e9b407a766513',
     timestamp: 1468479767190,
     title: 'Learn Redux in 10 minutes!',
     body: 'Just kidding. It takes more than 10 minutes to learn technology.',
     author: 'thingone',
     category: 'redux',
-    voteScore: -5,
+    voteScore: 3,
+    deleted: false
+  }, 
+  "d14e77f3203745cc9ad08e2eba433fad": {
+    id: 'd14e77f3203745cc9ad08e2eba433fad',
+    timestamp: 1468479767190,
+    title: 'Javascript Frameworks Chaos',
+    body: 'Angular, React, Vue, Ember, and more.',
+    author: 'thingthree',
+    category: 'javascript',
+    voteScore: 1,
     deleted: false
   }
 }
