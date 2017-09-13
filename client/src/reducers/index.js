@@ -7,6 +7,11 @@ const normalizePostArray = (arr) => arr.reduce( (obj, post) => {
   return obj;
 }, {});
 
+const normalizeCommentArray = (arr) => arr.reduce( (obj, comment) => {
+  obj[comment.id] = comment;
+  return obj;
+}, {});
+
 const posts = (state = {}, action) => {
   switch (action.type) { 
     case INIT_POSTS: 
@@ -20,10 +25,12 @@ const posts = (state = {}, action) => {
 }
 
 const comments = (state = {}, action) => {
-
   switch (action.type) { 
     case INIT_COMMENTS:
-      return state;
+    return {...state, 
+      byId: normalizeCommentArray(action.comments), 
+      allIds: action.comments.map( comment => comment.id)
+    };
     default:
       return state;
   }

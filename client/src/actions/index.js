@@ -6,7 +6,6 @@ export const initPosts = ( posts ) => ({
   posts
 })
 
-// removeFromCalendar takes 2 params and returns an object
 export const initComments = ( comments ) => ({
   type: INIT_COMMENTS, 
   comments

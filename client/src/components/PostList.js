@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import Post from './Post'
-import axios from 'axios'
+import { fetchComments } from '../utils'
+import { initComments } from '../actions'
 const moment = require('moment');
 
 const convertUnixToDate = timestamp => moment(new Date().setTime(timestamp)).format("MM/DD/YYYY");
@@ -22,10 +24,27 @@ const printPosts = arr => {
   })
 }
 
-const PostList = ({ posts }) => (
-  <div>
-    {printPosts(posts)}
-  </div>
-);
+class PostList extends Component {
 
-export default PostList;
+  componentDidMount() {
+    fetchComments(this.props.posts)
+      .then( result => {
+        this.props.loadComments(result)
+      })
+  }
+
+  render(){
+    return(
+      <div>
+        {printPosts(this.props.posts)}
+      </div>
+    );
+  }
+} 
+
+const mapStateToProps = (comment) => ({ comment });
+const mapDispatchToProps = dispatch => ({
+    loadComments: comment => dispatch( initComments(comment)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostList)

@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Grid, Row, Cell } from 'react-inline-grid' 
-import axios from 'axios'
 import { initPosts } from '../actions'
-
+import { fetchPosts } from '../utils'
 import Header from '../components/Header'
 import ButtonRow from '../components/ButtonRow'
 import FilterDropdown from '../components/FilterDropdown'
@@ -27,16 +26,11 @@ const titleStyles = {
 }
 
 class MainView extends Component {
+
   componentDidMount() {
-    axios.get('http://localhost:3001/posts', {
-      headers: { 'Authorization': 'readable' }
-    })
-    .then( (response) => {
-      this.props.loadPosts(response.data);
-    })
-    .catch( (response) => {
-      console.log(response);
-    });
+    fetchPosts()
+      .then( response => this.props.loadPosts(response.data))
+      .catch( response => console.log(response));
   }
 
   getPostsAsArray = (arr, obj) => {
@@ -71,7 +65,7 @@ class MainView extends Component {
 
 const mapStateToProps = post => ({ post });
 const mapDispatchToProps = dispatch => ({
-    loadPosts: post => dispatch( initPosts(post)), 
+    loadPosts: post => dispatch( initPosts(post)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainView)
