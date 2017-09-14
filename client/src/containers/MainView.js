@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Grid, Row, Cell } from 'react-inline-grid' 
-import { initPosts } from '../actions'
-import { fetchPosts } from '../utils'
+import { initPosts, initComments } from '../actions'
+import { fetchPosts, fetchComments, normalizeArray, getPostsAsArray } from '../utils'
 import Header from '../components/Header'
 import ButtonRow from '../components/ButtonRow'
 import FilterDropdown from '../components/FilterDropdown'
 import AddButton from '../components/AddButton'
 import PostList from '../components/PostList'
-import Spinner from '../components/Spinner'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 // const uuidv4 = require('uuid/v4');
@@ -29,21 +28,30 @@ class MainView extends Component {
 
   componentDidMount() {
     fetchPosts()
-      .then( response => this.props.loadPosts(response.data))
-      .catch( response => console.log(response));
-  }
+      .then( response => {
+        return response
+      })
+      .then( response => {
+        const allIds = response.data.map(post => post.id);
+        const byId = normalizeArray(response.data);
+        this.props.loadPosts({ byId, allIds });
 
-  getPostsAsArray = (arr, obj) => {
-    return arr.map( id => {
-      return obj[id];
-    })
+        const postData = getPostsAsArray(allIds, byId);
+        fetchComments(postData)
+          .then( result => {
+            const filteredComments = result.filter(comment => comment.data.length > 0)
+            const mappedComments = [];
+            filteredComments.forEach( comment => {
+              mappedComments.push(...comment.data)
+            })
+            const allIds = mappedComments.map(post => post.id);
+            const byId = normalizeArray(mappedComments);
+            this.props.loadComments({ byId, allIds })
+          })
+      })
   }
 
   render() {
-    const {posts} = this.props.post;
-    const postsArr = Array.isArray(posts.allIds) ?
-      <PostList posts={this.getPostsAsArray(posts.allIds, posts.byId)} />:
-      <Spinner />;
     return (
     <MuiThemeProvider>
       <div>
@@ -56,16 +64,17 @@ class MainView extends Component {
             <Cell is="middle 3 tablet-4 phone-4"><div><AddButton btnText="Add Post" /></div></Cell>
           </Row>
         </Grid>
-        {postsArr}
+        <PostList />
       </div>
       </MuiThemeProvider>
     )
   }
 }
 
-const mapStateToProps = post => ({ post });
+const mapStateToProps = (post, comment) => ({ post, comment });
 const mapDispatchToProps = dispatch => ({
-    loadPosts: post => dispatch( initPosts(post)),
+    loadPosts: postData => dispatch( initPosts(postData)),
+    loadComments: commentData => dispatch( initComments(commentData)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainView)

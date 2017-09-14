@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// API 
 export const fetchPosts = () => {
   return axios.get('http://localhost:3001/posts', {
     headers: { 'Authorization': 'readable' }
@@ -19,7 +20,14 @@ export const fetchComments = arr => {
   .then( result => result)
 }
 
-// .then(axios.spread( (acct, perms) => {
-  //   const result = [...acct.data, ...perms.data];
-  //   return result;
-  // }));
+// HELPERS
+export const normalizeArray = arr => arr.reduce( (obj, val) => {
+  obj[val.id] = val;
+  return obj;
+}, {});
+
+export const getPostsAsArray = (arr, obj) => {
+  return arr.map( id => {
+    return obj[id];
+  })
+}

@@ -2,22 +2,13 @@
 import { combineReducers } from 'redux';
 import { INIT_POSTS, INIT_COMMENTS } from '../actions/index'; // IMPORT THE ACTIONS
 
-const normalizePostArray = (arr) => arr.reduce( (obj, post) => {
-  obj[post.id] = post;
-  return obj;
-}, {});
-
-const normalizeCommentArray = (arr) => arr.reduce( (obj, comment) => {
-  obj[comment.id] = comment;
-  return obj;
-}, {});
-
 const posts = (state = {}, action) => {
+  const { byId, allIds } = action;
   switch (action.type) { 
     case INIT_POSTS: 
       return {...state, 
-        byId: normalizePostArray(action.posts), 
-        allIds: action.posts.map( post => post.id)
+        byId, 
+        allIds,
       };
     default:
       return state;
@@ -25,11 +16,12 @@ const posts = (state = {}, action) => {
 }
 
 const comments = (state = {}, action) => {
+  const { byId, allIds } = action;
   switch (action.type) { 
     case INIT_COMMENTS:
     return {...state, 
-      byId: normalizeCommentArray(action.comments), 
-      allIds: action.comments.map( comment => comment.id)
+      byId, 
+      allIds,
     };
     default:
       return state;

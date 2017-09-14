@@ -1,12 +1,14 @@
 export const INIT_POSTS = 'INIT_POSTS';
 export const INIT_COMMENTS = 'INIT_COMMENTS';
 
-export const initPosts = ( posts ) => ({
+export const initPosts = ({ allIds, byId }) => ({
   type: INIT_POSTS, 
-  posts
+  allIds, 
+  byId
 })
 
-export const initComments = ( comments ) => ({
+export const initComments = ({ allIds, byId }) => ({
   type: INIT_COMMENTS, 
-  comments
+  allIds, 
+  byId
 });
