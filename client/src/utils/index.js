@@ -31,3 +31,9 @@ export const getPostsAsArray = (arr, obj) => {
     return obj[id];
   })
 }
+
+export const getCommentsCount = commentsObj => {
+  return Object.values(commentsObj).map( val => val.parentId).reduce( (obj, val) => {
+    if ( val in obj ) { obj[val]++ } else { obj[val] = 1 } return obj
+  }, {})
+}
