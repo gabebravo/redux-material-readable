@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Post from './Post'
 import Spinner from './Spinner'
+import { incrementPostScore, decrementPostScore } from '../actions'
 import { getCommentsCount } from '../utils'
 // const _ = require('lodash');
 const moment = require('moment');
@@ -24,13 +25,14 @@ class PostList extends Component {
           category={post.category}
           voteScore={post.voteScore}
           body={post.body}
+          incrementScore={() => this.props.incrementScore(post.id)}
+          decrementScore={() => this.props.decrementScore(post.id)}
         />
       )
     })
   }
 
   render(){
-    console.log('postlist', this.props.posts)
     const postView =  Array.isArray(this.props.posts) && Array.isArray(this.props.comments) ?
       this.printPosts(this.props.posts)
       : <Spinner />
@@ -43,4 +45,8 @@ class PostList extends Component {
 } 
 
 const mapStateToProps = ({ posts, comments }) => ({ posts, comments });
-export default connect(mapStateToProps, null)(PostList)
+const mapDispatchToProps = dispatch => ({
+  incrementScore: id => dispatch( incrementPostScore(id)),
+  decrementScore: id => dispatch( decrementPostScore(id)),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(PostList)

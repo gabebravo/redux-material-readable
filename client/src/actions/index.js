@@ -5,6 +5,18 @@ export const setPosts = posts => ({
   posts
 })
 
+export const INCREMENT_POST_SCORE = 'INCREMENT_POST_SCORE';
+export const incrementPostScore = id => ({
+  type: INCREMENT_POST_SCORE, 
+  id
+})
+
+export const DECREMENT_POST_SCORE = 'DECREMENT_POST_SCORE';
+export const decrementPostScore = id => ({
+  type: DECREMENT_POST_SCORE, 
+  id
+})
+
 // COMMENT ACTIONS & ACTION CREATORS
 export const SET_COMMENTS = 'SET_COMMENTS';
 export const setComments = comments => ({

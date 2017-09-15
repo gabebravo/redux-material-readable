@@ -11,7 +11,6 @@ class FilterDropdown extends Component {
   handleChange = (event, index, value) => this.props.setDropdown(value)
 
   render() {
-    console.log('filter', this.props.posts)
     const view = typeof this.props.filterDropdown === 'number' ?
       (<SelectField
         floatingLabelText="Filter By"

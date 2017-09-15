@@ -1,7 +1,7 @@
 import React from 'react'
 import {Card, CardHeader, CardActions, CardText} from 'material-ui/Card'
 import Chip from 'material-ui/Chip'
-import ButtonSet from '../components/ButtonSet'
+import RaisedButton from 'material-ui/RaisedButton'
 import AddIcon from 'material-ui/svg-icons/content/add'
 import RemoveIcon from 'material-ui/svg-icons/content/remove'
 import ViewIcon from 'material-ui/svg-icons/action/visibility'
@@ -22,7 +22,13 @@ const iconStyles = {
   color: 'rgb(0, 188, 212)'
 }
 
-const Post = ({ id, title, timestamp, author, category, comments, voteScore, body }) => (
+const btnStlyes = {
+  marginRight: 10,
+  marginBottom: 10
+}
+
+const Post = ({ id, incrementScore, decrementScore, title, timestamp, author, 
+  category, comments, voteScore, body }) => (
   <Card>
     <CardHeader
       title={title}
@@ -36,7 +42,10 @@ const Post = ({ id, title, timestamp, author, category, comments, voteScore, bod
     </div>
     <CardText>{body}</CardText>
     <CardActions>
-      <ButtonSet id={id} btn1Text="Score" btn2Text="Score" svg1={<AddIcon/>} svg2={<RemoveIcon/>} />
+    <div style={{ display: 'inline' }}>
+      <RaisedButton onClick={incrementScore} label="Score" secondary={true} style={btnStlyes} icon={<AddIcon/>} />
+      <RaisedButton onClick={decrementScore} label="Score" secondary={true} style={btnStlyes} icon={<RemoveIcon/>} />
+    </div>
     </CardActions>
   </Card>
 );
