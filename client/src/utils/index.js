@@ -38,15 +38,16 @@ export const getCommentsCount = commentsArray => {
 }
 
 export const sortPostsArray = (postsArr, sortType) => {
+  const arr = [...postsArr];
   switch(sortType){
     case 'score' : {
-      return postsArr.sort( (a, b) => {
+      return arr.sort( (a, b) => {
         if ( a.voteScore < b.voteScore ) { return 1 } else if ( a.voteScore > b.voteScore ) { return - 1 } return 0
       })
     }
       break;
     case 'date' : {
-      return postsArr.sort( (a, b) => {
+      return arr.sort( (a, b) => {
         if ( a.timestamp < b.timestamp ) { return 1 } else if ( a.timestamp > b.timestamp ) { return - 1 } return 0
       })
     }
