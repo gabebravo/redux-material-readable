@@ -2,7 +2,7 @@ import React from 'react';
 import CircularProgress from 'material-ui/CircularProgress';
 
 const Spinner = () => (
-  <div>
+  <div style={{ marginLeft: '2rem' }}>
     <CircularProgress size={80} thickness={5} />
   </div>
 );

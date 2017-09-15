@@ -21,19 +21,37 @@ export const fetchComments = arr => {
 }
 
 // HELPERS
-export const normalizeArray = arr => arr.reduce( (obj, val) => {
-  obj[val.id] = val;
-  return obj;
-}, {});
-
-export const getPostsAsArray = (arr, obj) => {
-  return arr.map( id => {
-    return obj[id];
-  })
+export const mapCommentsToArray = arr => {
+  const filteredComments = arr.filter(comment => comment.data.length > 0)
+  const mappedComments = [];
+  filteredComments.forEach( comment => {
+    mappedComments.push(...comment.data)
+  });
+  return mappedComments;
 }
 
-export const getCommentsCount = commentsObj => {
-  return Object.values(commentsObj).map( val => val.parentId).reduce( (obj, val) => {
+export const getCommentsCount = commentsArray => {
+  return commentsArray.map( comment => comment.parentId )
+  .reduce( (obj, val) => {
     if ( val in obj ) { obj[val]++ } else { obj[val] = 1 } return obj
-  }, {})
+  }, {});
+}
+
+export const sortPostsArray = (postsArr, sortType) => {
+  switch(sortType){
+    case 'score' : {
+      return postsArr.sort( (a, b) => {
+        if ( a.voteScore < b.voteScore ) { return 1 } else if ( a.voteScore > b.voteScore ) { return - 1 } return 0
+      })
+    }
+      break;
+    case 'date' : {
+      return postsArr.sort( (a, b) => {
+        if ( a.timestamp < b.timestamp ) { return 1 } else if ( a.timestamp > b.timestamp ) { return - 1 } return 0
+      })
+    }
+      break;
+    default:
+      break;
+  }
 }

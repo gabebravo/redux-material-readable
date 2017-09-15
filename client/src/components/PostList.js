@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Post from './Post'
 import Spinner from './Spinner'
-import { getPostsAsArray, getCommentsCount } from '../utils'
+import { getCommentsCount } from '../utils'
 // const _ = require('lodash');
 const moment = require('moment');
 
@@ -11,7 +11,7 @@ const convertUnixToDate = timestamp => moment(new Date().setTime(timestamp)).for
 class PostList extends Component {
 
   printPosts = arr => {
-    const countIds = getCommentsCount(this.props.comments.byId)
+    const countIds = getCommentsCount(this.props.comments);
     return arr.map( post => {
       return (
         <Post 
@@ -30,8 +30,9 @@ class PostList extends Component {
   }
 
   render(){
-    const postView =  Array.isArray(this.props.posts.allIds) && Array.isArray(this.props.comments.allIds) ?
-      this.printPosts(getPostsAsArray(this.props.posts.allIds, this.props.posts.byId))
+    console.log('postlist', this.props.posts)
+    const postView =  Array.isArray(this.props.posts) && Array.isArray(this.props.comments) ?
+      this.printPosts(this.props.posts)
       : <Spinner />
     return(
       <div>
@@ -42,10 +43,4 @@ class PostList extends Component {
 } 
 
 const mapStateToProps = ({ posts, comments }) => ({ posts, comments });
-
-// {printPosts(this.props.posts)}
-// const mapDispatchToProps = dispatch => ({
-//     loadComments: comment => dispatch( initComments(comment)),
-// });
-
-export default connect(mapStateToProps)(PostList)
+export default connect(mapStateToProps, null)(PostList)

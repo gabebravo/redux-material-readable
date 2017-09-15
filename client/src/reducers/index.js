@@ -1,33 +1,34 @@
 // IMPORT COMBINEREDUCERS FROM REDUX 
 import { combineReducers } from 'redux';
-import { INIT_POSTS, INIT_COMMENTS } from '../actions/index'; // IMPORT THE ACTIONS
+import { SET_POSTS, SET_COMMENTS, SET_FILTER_DROPDOWN } from '../actions/index'; // IMPORT THE ACTIONS
 
 const posts = (state = {}, action) => {
-  const { byId, allIds } = action;
   switch (action.type) { 
-    case INIT_POSTS: 
-      return {...state, 
-        byId, 
-        allIds,
-      };
+    case SET_POSTS: 
+      return action.posts;
     default:
       return state;
   }
 }
 
 const comments = (state = {}, action) => {
-  const { byId, allIds } = action;
   switch (action.type) { 
-    case INIT_COMMENTS:
-    return {...state, 
-      byId, 
-      allIds,
-    };
+    case SET_COMMENTS: 
+      return action.comments;
+    default:
+      return state;
+  }
+}
+
+const filterDropdown = (state = {}, action) => {
+  switch (action.type) { 
+    case SET_FILTER_DROPDOWN: 
+      return action.numValue;
     default:
       return state;
   }
 }
 
 export default combineReducers({
-  posts, comments
+  posts, comments, filterDropdown
 });

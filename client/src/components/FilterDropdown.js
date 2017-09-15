@@ -1,28 +1,38 @@
 import React, { Component } from 'react'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { connect } from 'react-redux'
+import { setDropdown, setPosts } from '../actions'
+import { sortPostsArray } from '../utils'
 import SelectField from 'material-ui/SelectField';
+import Spinner from './Spinner';
 import MenuItem from 'material-ui/MenuItem';
 
-export default class FilterDropdown extends Component {
+class FilterDropdown extends Component {
 
-  state = {
-    value: 1,
-  };
-
-  handleChange = (event, index, value) => this.setState({value});
+  handleChange = (event, index, value) => this.props.setDropdown(value)
 
   render() {
+    console.log('filter', this.props.posts)
+    const view = typeof this.props.filterDropdown === 'number' ?
+      (<SelectField
+        floatingLabelText="Filter By"
+        value={this.props.filterDropdown}
+        onChange={this.handleChange}
+      >
+        <MenuItem value={1} onClick={() => this.props.filterPosts(sortPostsArray(this.props.posts, 'score'))} primaryText="Score" />
+        <MenuItem value={2} onClick={() => this.props.filterPosts(sortPostsArray(this.props.posts, 'date'))} primaryText="Date" />
+      </SelectField>): 
+      <Spinner />
     return (
-      <MuiThemeProvider>
-        <SelectField
-          floatingLabelText="Filter By"
-          value={this.state.value}
-          onChange={this.handleChange}
-        >
-          <MenuItem value={1} primaryText="Score" />
-          <MenuItem value={2} primaryText="Date" />
-        </SelectField>
-      </MuiThemeProvider>
+      <div>{view}</div>
     )
   }
 }
+
+const mapStateToProps = ({ posts, filterDropdown }) => ({ posts, filterDropdown });
+const mapDispatchToProps = dispatch => ({
+  setDropdown: numValue => dispatch( setDropdown(numValue)),
+  filterPosts: posts => dispatch( setPosts(posts)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FilterDropdown)
+
