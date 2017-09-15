@@ -7,6 +7,18 @@ export const fetchPosts = () => {
   })
 }
 
+export const fetchPostsByCategory = category => {
+  return axios.get(`http://localhost:3001/${category}/posts`, {
+    headers: { 'Authorization': 'readable' }
+  }).catch( response => response.end() )
+}
+
+export const updatePostScores = id => {
+  return axios.put(`http://localhost:3001/posts/${id}`, {
+    headers: { 'Authorization': 'readable' }
+  })
+}
+
 export const fetchComment = id => {
   return axios.get(`http://localhost:3001/posts/${id}/comments`, {
     headers: { 'Authorization': 'readable' }
@@ -20,6 +32,11 @@ export const fetchComments = arr => {
   .then( result => result)
 }
 
+export const fetchCategories = () => {
+  return axios.get(`http://localhost:3001/categories`, {
+    headers: { 'Authorization': 'readable' }
+  })
+}
 // HELPERS
 export const mapCommentsToArray = arr => {
   const filteredComments = arr.filter(comment => comment.data.length > 0)

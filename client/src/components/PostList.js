@@ -4,7 +4,6 @@ import Post from './Post'
 import Spinner from './Spinner'
 import { incrementPostScore, decrementPostScore } from '../actions'
 import { getCommentsCount } from '../utils'
-// const _ = require('lodash');
 const moment = require('moment');
 
 const convertUnixToDate = timestamp => moment(new Date().setTime(timestamp)).format("MM/DD/YYYY");
@@ -44,9 +43,8 @@ class PostList extends Component {
   }
 } 
 
-const mapStateToProps = ({ posts, comments }) => ({ posts, comments });
 const mapDispatchToProps = dispatch => ({
   incrementScore: id => dispatch( incrementPostScore(id)),
   decrementScore: id => dispatch( decrementPostScore(id)),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(PostList)
+export default connect(null, mapDispatchToProps)(PostList)

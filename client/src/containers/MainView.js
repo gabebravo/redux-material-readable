@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { setPosts, setComments, setDropdown } from '../actions'
-import { fetchPosts, fetchComments, mapCommentsToArray, sortPostsArray } from '../utils'
+import { setPosts, setComments, setCategories, setDropdown } from '../actions'
+import { fetchPosts, fetchComments, fetchCategories, 
+  mapCommentsToArray, sortPostsArray } from '../utils'
 import Header from '../components/Header'
 import ButtonRow from '../components/ButtonRow'
+import Spinner from '../components/Spinner'
 import FilterDropdown from '../components/FilterDropdown'
 import AddButton from '../components/AddButton'
 import PostList from '../components/PostList'
@@ -27,28 +29,39 @@ const titleStyles = {
 class MainView extends Component {
 
   componentDidMount() {
-    fetchPosts()
+    fetchCategories()
       .then( response => {
         return response
       })
       .then( response => {
-        const postsArray = sortPostsArray(response.data, 'score');
-        this.props.setPosts(postsArray);
-        fetchComments(response.data)
-          .then( result => {
-            const commentsArray = mapCommentsToArray(result);
-            this.props.setComments(commentsArray)
+        const categoriesArray = response.data.categories.map(category => category.name)
+        this.props.setCategories(categoriesArray)
+        fetchPosts()
+          .then( response => {
+            return response
+          })
+          .then( response => {
+            const postsArray = sortPostsArray(response.data, 'score');
+            this.props.setPosts(postsArray);
+            fetchComments(response.data)
+              .then( response => {
+                const commentsArray = mapCommentsToArray(response);
+                this.props.setComments(commentsArray)
+              })
           })
       })
       this.props.setDropdown(1);
   }
 
   render() {
+    const postList = Array.isArray(this.props.posts) && Array.isArray(this.props.comments) ?
+    <PostList posts={this.props.posts} comments={this.props.comments} />:
+    <Spinner />
     return (
     <MuiThemeProvider>
       <div>
         <Header />
-        <ButtonRow title="Category Pages: " btn1="React" btn2="Redux" btn3="Javascript" btn4="Udactiy"/>
+        <ButtonRow title="Category Pages: " categories={this.props.categories} />
         <div className="row" style={{ marginBottom: '1.7rem' }}>
           <div className="col-xs col-sm-2">
             <h4 style={titleStyles}>Posts</h4>
@@ -60,18 +73,22 @@ class MainView extends Component {
             <AddButton btnText="Add Post"/>
           </div>
         </div>
-       <PostList />
+       {postList}
       </div>
       </MuiThemeProvider>
     )
   }
 }
 
-// const mapStateToProps = ({ posts, comments, filterDropdown }) => ({ posts, comments, filterDropdown });
+const mapStateToProps = ({ posts, comments, categories }) => ({ posts, comments, categories });
 const mapDispatchToProps = dispatch => ({
     setPosts: postsArray => dispatch( setPosts(postsArray)),
     setComments: commentsArray => dispatch( setComments(commentsArray)),
+    setCategories: categoriesArray => dispatch( setCategories(categoriesArray)),
     setDropdown: numValue => dispatch( setDropdown(numValue)),
 });
 
-export default connect(null, mapDispatchToProps)(MainView)
+export default connect(mapStateToProps, mapDispatchToProps)(MainView)
+
+// const actions = {setPosts, setComments, setDropdown};
+// export default connect(null, actions )(MainView)
