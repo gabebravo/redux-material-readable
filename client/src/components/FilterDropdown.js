@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { setDropdown, setPosts } from '../actions'
+import { setFilterDropdown, setPosts } from '../actions'
 import { sortPostsArray } from '../utils'
 import SelectField from 'material-ui/SelectField';
 import Spinner from './Spinner';
@@ -29,7 +29,7 @@ class FilterDropdown extends Component {
 
 const mapStateToProps = ({ posts, filterDropdown }) => ({ posts, filterDropdown });
 const mapDispatchToProps = dispatch => ({
-  setDropdown: numValue => dispatch( setDropdown(numValue)),
+  setDropdown: numValue => dispatch( setFilterDropdown(numValue)),
   filterPosts: posts => dispatch( setPosts(posts)),
 });
 

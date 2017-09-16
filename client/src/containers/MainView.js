@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { setPosts, setComments, setCategories, setDropdown } from '../actions'
+import { Link } from 'react-router-dom'
+import { setPosts, setComments, setCategories } from '../actions'
 import { fetchPosts, fetchComments, fetchCategories, 
   mapCommentsToArray, sortPostsArray } from '../utils'
 import Header from '../components/Header'
@@ -11,9 +12,6 @@ import AddButton from '../components/AddButton'
 import PostList from '../components/PostList'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 require('flexboxgrid')
-
-// const uuidv4 = require('uuid/v4');
-// console.log(uuidv4().split('-').join(''))
 
 const titleStyles = {
   boxSizing: 'border-box',
@@ -29,6 +27,7 @@ const titleStyles = {
 class MainView extends Component {
 
   componentDidMount() {
+    
     fetchCategories()
       .then( response => {
         return response
@@ -50,7 +49,6 @@ class MainView extends Component {
               })
           })
       })
-      this.props.setDropdown(1);
   }
 
   render() {
@@ -72,7 +70,7 @@ class MainView extends Component {
             <FilterDropdown />
           </div>
           <div className="col-xs-12 col-sm-2" style={{ marginTop: '1.6rem' }}>
-            <AddButton btnText="Add Post"/>
+            <Link to={`/post-form`}><AddButton btnText="Add Post"/></Link>
           </div>
         </div>
        {postList}
@@ -87,10 +85,6 @@ const mapDispatchToProps = dispatch => ({
     setPosts: postsArray => dispatch( setPosts(postsArray)),
     setComments: commentsArray => dispatch( setComments(commentsArray)),
     setCategories: categoriesArray => dispatch( setCategories(categoriesArray)),
-    setDropdown: numValue => dispatch( setDropdown(numValue)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainView)
-
-// const actions = {setPosts, setComments, setDropdown};
-// export default connect(null, actions )(MainView)

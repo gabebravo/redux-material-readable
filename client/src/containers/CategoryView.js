@@ -4,7 +4,7 @@ import Header from '../components/Header'
 import PostList from '../components/PostList'
 import FilterDropdown from '../components/FilterDropdown'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import { sortPostsArray, filterPostsByCategory } from '../utils'
+import { filterPostsByCategory } from '../utils'
 require('flexboxgrid')
 
 const titleStyles = {

@@ -7,6 +7,26 @@ export const setPosts = posts => ({
   posts
 })
 
+export const ADD_POST = 'ADD_POST';
+export const addPost = post => {
+  return ({
+    type: ADD_POST, 
+    post
+  })
+}
+
+export const handleAddingPost = (postBody) => {
+  return (dispatch) => {
+    axios({
+      method: 'post',
+      url: `http://localhost:3001/posts`,
+      headers: { 'Authorization': 'readable' },
+      data: postBody
+    }).then( response => dispatch(addPost(response.data)))
+    .catch( response => console.log(response.error))
+  }
+}
+
 export const UPDATE_POST_SCORE = 'UPDATE_POST_SCORE';
 export const updatePostScore = (id, newScore) => {
   return ({
@@ -43,7 +63,13 @@ export const setCategories = categories => ({
 
 // RANDOM UI COMPONENT STATE ACTIONS & ACTION CREATORS
 export const SET_FILTER_DROPDOWN = 'SET_FILTER_DROPDOWN';
-export const setDropdown = numValue => ({
+export const setFilterDropdown = numValue => ({
   type: SET_FILTER_DROPDOWN, 
   numValue
+});
+
+export const SET_FORM_DATA = 'SET_FORM_DATA';
+export const setFormData = (key, val) => ({
+  type: SET_FORM_DATA, 
+  key, val
 });
