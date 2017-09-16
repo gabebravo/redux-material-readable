@@ -13,16 +13,18 @@ export const fetchPostsByCategory = category => {
   }).catch( response => response.end() )
 }
 
-export const updatePostScores = (id, score) => {
-  axios({
-    method: 'put',
-    url: `http://localhost:3001/posts/${id}`,
-    headers: { 'Authorization': 'readable' },
-    data: {
-      voteScore: score
-    }
-  });
-}
+// export const updatePostScore = (id, score) => {
+//   return (dispatch) => {
+//     axios({
+//       method: 'put',
+//       url: `http://localhost:3001/posts/${id}`,
+//       headers: { 'Authorization': 'readable' },
+//       data: {
+//         voteScore: (score + 1)
+//       }
+//     }).then( response => dispatch(incrementPostScore(response.data.voteScore)))
+//   }
+// }
 
 export const fetchComment = id => {
   return axios.get(`http://localhost:3001/posts/${id}/comments`, {

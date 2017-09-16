@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 // POST ACTIONS & ACTION CREATORS
 export const SET_POSTS = 'SET_POSTS';
 export const setPosts = posts => ({
@@ -5,17 +7,25 @@ export const setPosts = posts => ({
   posts
 })
 
-export const INCREMENT_POST_SCORE = 'INCREMENT_POST_SCORE';
-export const incrementPostScore = id => ({
-  type: INCREMENT_POST_SCORE, 
-  id
-})
+export const UPDATE_POST_SCORE = 'UPDATE_POST_SCORE';
+export const updatePostScore = (id, newScore) => {
+  return ({
+    type: UPDATE_POST_SCORE,
+    id, 
+    newScore
+  })
+}
 
-export const DECREMENT_POST_SCORE = 'DECREMENT_POST_SCORE';
-export const decrementPostScore = id => ({
-  type: DECREMENT_POST_SCORE, 
-  id
-})
+export const handlePostScore = (id, score, isIncFlag) => {
+  return (dispatch) => {
+    axios({
+      method: 'put',
+      url: `http://localhost:3001/posts/${id}`,
+      headers: { 'Authorization': 'readable' },
+      data: isIncFlag ? { voteScore: (score + 1) } : { voteScore: (score - 1) }
+    }).then( response => dispatch(updatePostScore(id, response.data.voteScore)))
+  }
+}
 
 // COMMENT ACTIONS & ACTION CREATORS
 export const SET_COMMENTS = 'SET_COMMENTS';

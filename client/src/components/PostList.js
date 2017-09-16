@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Post from './Post'
 import Spinner from './Spinner'
-import { incrementPostScore, decrementPostScore } from '../actions'
+import { handlePostScore } from '../actions'
 import { getCommentsCount } from '../utils'
 const moment = require('moment');
 
@@ -23,9 +23,9 @@ class PostList extends Component {
           author={post.author}
           category={post.category}
           voteScore={post.voteScore}
-          body={post.body}
-          incrementScore={() => this.props.incrementScore(post.id)}
-          decrementScore={() => this.props.decrementScore(post.id)}
+          body={post.body} // NOTE: true/false below === isIncFlag
+          incrementScore={() => this.props.handlePostScore(post.id, post.voteScore, true)}
+          decrementScore={() => this.props.handlePostScore(post.id, post.voteScore, false)}
         />
       )
     })
@@ -43,8 +43,7 @@ class PostList extends Component {
   }
 } 
 
-const mapDispatchToProps = dispatch => ({
-  incrementScore: id => dispatch( incrementPostScore(id)),
-  decrementScore: id => dispatch( decrementPostScore(id)),
-});
-export default connect(null, mapDispatchToProps)(PostList)
+const actions = { handlePostScore }
+export default connect(null, actions)(PostList)
+
+
