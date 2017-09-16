@@ -45,11 +45,4 @@ class CategoryView extends Component {
 }
 
 const mapStateToProps = ({ posts, comments }) => ({ posts, comments });
-// const mapDispatchToProps = dispatch => ({
-//     setPosts: postsArray => dispatch( setPosts(postsArray)),
-//     setComments: commentsArray => dispatch( setComments(commentsArray)),
-//     setCategories: categoriesArray => dispatch( setCategories(categoriesArray)),
-//     setDropdown: numValue => dispatch( setDropdown(numValue)),
-// });
-
 export default connect(mapStateToProps, null)(CategoryView)

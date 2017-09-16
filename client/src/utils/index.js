@@ -13,10 +13,15 @@ export const fetchPostsByCategory = category => {
   }).catch( response => response.end() )
 }
 
-export const updatePostScores = id => {
-  return axios.put(`http://localhost:3001/posts/${id}`, {
-    headers: { 'Authorization': 'readable' }
-  })
+export const updatePostScores = (id, score) => {
+  axios({
+    method: 'put',
+    url: `http://localhost:3001/posts/${id}`,
+    headers: { 'Authorization': 'readable' },
+    data: {
+      voteScore: score
+    }
+  });
 }
 
 export const fetchComment = id => {

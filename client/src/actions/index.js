@@ -17,12 +17,6 @@ export const decrementPostScore = id => ({
   id
 })
 
-export const UPDATE_POST_SCORE = 'UPDATE_POST_SCORE';
-export const updatePostScore = (id, score) => ({
-  type: UPDATE_POST_SCORE, 
-  id, score
-})
-
 // COMMENT ACTIONS & ACTION CREATORS
 export const SET_COMMENTS = 'SET_COMMENTS';
 export const setComments = comments => ({

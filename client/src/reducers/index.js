@@ -2,24 +2,25 @@
 import { combineReducers } from 'redux';
 import { SET_POSTS, SET_COMMENTS, SET_CATEGORIES,  
   SET_FILTER_DROPDOWN, INCREMENT_POST_SCORE, DECREMENT_POST_SCORE } from '../actions/index'; // IMPORT THE ACTIONS
+import { updatePostScores } from '../utils'
 
 const posts = (state = {}, action) => {
   switch (action.type) { 
     case SET_POSTS: 
       return action.posts;
     case INCREMENT_POST_SCORE: {
-      console.log('inc')
       return [...state].map( post => {
         if(post.id === action.id){
           post.voteScore++
+          updatePostScores(action.id, post.voteScore)
         } return post;
       });
     }
     case DECREMENT_POST_SCORE: {
-      console.log('dec')
       return [...state].map( post => {
         if(post.id === action.id){
-          post.voteScore--
+          post.voteScore--;
+          updatePostScores(action.id, post.voteScore)
         } return post;
       });
     }
