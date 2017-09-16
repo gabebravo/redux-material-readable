@@ -1,6 +1,6 @@
 // IMPORT COMBINEREDUCERS FROM REDUX 
 import { combineReducers } from 'redux';
-import { SET_POSTS, SET_COMMENTS, SET_CATEGORIES, SET_CATEGORY_POSTS, 
+import { SET_POSTS, SET_COMMENTS, SET_CATEGORIES,  
   SET_FILTER_DROPDOWN, INCREMENT_POST_SCORE, DECREMENT_POST_SCORE } from '../actions/index'; // IMPORT THE ACTIONS
 
 const posts = (state = {}, action) => {
@@ -8,7 +8,6 @@ const posts = (state = {}, action) => {
     case SET_POSTS: 
       return action.posts;
     case INCREMENT_POST_SCORE: {
-      console.log('inc')
       return [...state].map( post => {
         if(post.id === action.id){
           post.voteScore++
@@ -16,7 +15,6 @@ const posts = (state = {}, action) => {
       });
     }
     case DECREMENT_POST_SCORE: {
-      console.log('dec')
       return [...state].map( post => {
         if(post.id === action.id){
           post.voteScore--
@@ -46,15 +44,6 @@ const categories = (state = {}, action) => {
   }
 }
 
-const categoryPosts = (state = {}, action) => {
-  switch (action.type) { 
-    case SET_CATEGORY_POSTS: 
-      return action.posts;
-    default:
-      return state;
-  }
-}
-
 const filterDropdown = (state = {}, action) => {
   switch (action.type) { 
     case SET_FILTER_DROPDOWN: 
@@ -65,5 +54,5 @@ const filterDropdown = (state = {}, action) => {
 }
 
 export default combineReducers({
-  posts, comments, categories, categoryPosts, filterDropdown
+  posts, comments, categories, filterDropdown
 });

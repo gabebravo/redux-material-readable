@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { setPosts, setComments, setDropdown } from '../actions'
+import { fetchPosts, fetchComments, sortPostsArray, mapCommentsToArray } from '../utils'
 import Header from '../components/Header'
 import PostList from '../components/PostList'
 import Spinner from '../components/Spinner'
 import FilterDropdown from '../components/FilterDropdown'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import { fetchPostsByCategory, fetchComments, sortPostsArray, mapCommentsToArray } from '../utils'
-import { setCategoryPosts, setComments, setDropdown } from '../actions'
 require('flexboxgrid')
 
 const titleStyles = {
@@ -23,10 +23,13 @@ const titleStyles = {
 class CategoryView extends Component {
 
   componentDidMount() {
-    fetchPostsByCategory(this.props.match.params.category)
+    fetchPosts()
+      .then( response => {
+        return response
+      })
       .then( response => {
         const postsArray = sortPostsArray(response.data, 'score');
-        this.props.setCategoryPosts(postsArray);
+        this.props.setPosts(postsArray);
         fetchComments(response.data)
           .then( response => {
             const commentsArray = mapCommentsToArray(response);
@@ -36,9 +39,15 @@ class CategoryView extends Component {
     this.props.setDropdown(1);
   }
 
+  filterPostsToCategory = (arr, category) => {
+    return arr.filter( post => post.category === category )
+  }
+
   render() {
-    const categoryPosts = Array.isArray(this.props.categoryPosts) && Array.isArray(this.props.categoryComments) ?
-    <PostList posts={this.props.categoryPosts} comments={this.props.categoryComments} />:
+    const postList = Array.isArray(this.props.posts) && Array.isArray(this.props.comments) ?
+    <PostList 
+      posts={this.filterPostsToCategory([...this.props.posts], this.props.match.params.category)} 
+      comments={this.props.comments} />:
     <Spinner />
     return (
       <MuiThemeProvider>
@@ -52,7 +61,7 @@ class CategoryView extends Component {
               <FilterDropdown />
             </div>
           </div>
-          <h3>{categoryPosts}</h3>
+          {postList}
         </div>
       </MuiThemeProvider>
     )
@@ -60,14 +69,13 @@ class CategoryView extends Component {
 }
 
 // <PostList />
-const mapStateToProps = (state, ownProps) => ({  
-  categoryPosts: state.categoryPosts,
-  categoryComments: state.comments,
-});
+const mapStateToProps = ({ posts, comments }) => ({ posts, comments });
 const mapDispatchToProps = dispatch => ({
-  setCategoryPosts: categories => dispatch( setCategoryPosts(categories)),
+  setPosts: postsArray => dispatch( setPosts(postsArray)),
   setComments: commentsArray => dispatch( setComments(commentsArray)),
   setDropdown: numValue => dispatch( setDropdown(numValue)), 
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoryView)
+
+// export default CategoryView
