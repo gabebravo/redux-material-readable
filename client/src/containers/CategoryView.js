@@ -2,11 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Header from '../components/Header'
 import PostList from '../components/PostList'
-import Spinner from '../components/Spinner'
 import FilterDropdown from '../components/FilterDropdown'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import { fetchPostsByCategory, fetchComments, sortPostsArray, mapCommentsToArray } from '../utils'
-import { setCategoryPosts, setComments, setDropdown } from '../actions'
+import { sortPostsArray, filterPostsByCategory } from '../utils'
 require('flexboxgrid')
 
 const titleStyles = {
@@ -22,27 +20,11 @@ const titleStyles = {
 
 class CategoryView extends Component {
 
-  componentDidMount() {
-    console.log(this.props.location.state.posts)
-    console.log(this.props.location.state.comments)
-    // fetchPostsByCategory(this.props.match.params.category)
-    //   .then( response => {
-    //     const postsArray = sortPostsArray(response.data, 'score');
-    //     this.props.setCategoryPosts(postsArray);
-    //     fetchComments(response.data)
-    //       .then( response => {
-    //         const commentsArray = mapCommentsToArray(response);
-    //         this.props.setComments(commentsArray)
-    //       })
-    //   })
-    // this.props.setDropdown(1);
-  }
-
   render() {
-    const {posts, comments} = this.props.location.state;
-    const categoryPosts = Array.isArray(posts) && Array.isArray(comments) ?
-    <PostList posts={posts} comments={comments} />:
-    <Spinner />
+    const { posts, comments } = this.props;
+    const { category } = this.props.match.params;
+    const postsByCategory = filterPostsByCategory(posts, category);
+
     return (
       <MuiThemeProvider>
         <div>
@@ -55,24 +37,19 @@ class CategoryView extends Component {
               <FilterDropdown />
             </div>
           </div>
-          {categoryPosts}
+          <PostList posts={postsByCategory} comments={comments} />
         </div>
       </MuiThemeProvider>
     )
   }
 }
 
-// <PostList />
-// const mapStateToProps = (state, ownProps) => ({  
-//   categoryPosts: state.categoryPosts,
-//   categoryComments: state.comments,
-// });
+const mapStateToProps = ({ posts, comments }) => ({ posts, comments });
 // const mapDispatchToProps = dispatch => ({
-//   setCategoryPosts: categories => dispatch( setCategoryPosts(categories)),
-//   setComments: commentsArray => dispatch( setComments(commentsArray)),
-//   setDropdown: numValue => dispatch( setDropdown(numValue)), 
+//     setPosts: postsArray => dispatch( setPosts(postsArray)),
+//     setComments: commentsArray => dispatch( setComments(commentsArray)),
+//     setCategories: categoriesArray => dispatch( setCategories(categoriesArray)),
+//     setDropdown: numValue => dispatch( setDropdown(numValue)),
 // });
 
-// export default connect(mapStateToProps, mapDispatchToProps)(CategoryView)
-
-export default CategoryView
+export default connect(mapStateToProps, null)(CategoryView)

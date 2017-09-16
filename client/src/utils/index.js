@@ -70,3 +70,8 @@ export const sortPostsArray = (postsArr, sortType) => {
     default:
   }
 }
+
+export const filterPostsByCategory = (postsArr, category) => {
+  const arr = [...postsArr];
+  return arr.filter( post => post.category ===  category)
+}

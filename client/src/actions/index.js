@@ -37,18 +37,6 @@ export const setCategories = categories => ({
   categories
 });
 
-export const SET_CATEGORY_POSTS = 'SET_CATEGORY_POSTS';
-export const setCategoryPosts = posts => ({
-  type: SET_CATEGORY_POSTS, 
-  posts
-})
-
-export const SET_CATEGORY_COMMENTS = 'SET_CATEGORY_COMMENTS';
-export const setCategoryComments = comments => ({
-  type: SET_CATEGORY_COMMENTS, 
-  comments
-})
-
 // RANDOM UI COMPONENT STATE ACTIONS & ACTION CREATORS
 export const SET_FILTER_DROPDOWN = 'SET_FILTER_DROPDOWN';
 export const setDropdown = numValue => ({

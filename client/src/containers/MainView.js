@@ -54,13 +54,11 @@ class MainView extends Component {
   }
 
   render() {
-    const postList = Array.isArray(this.props.posts) && Array.isArray(this.props.comments) && Array.isArray(this.props.categories) ?
-    <PostList posts={this.props.posts} comments={this.props.comments} />:
-    <Spinner />
-    const buttonRow = Array.isArray(this.props.posts) && Array.isArray(this.props.comments) && Array.isArray(this.props.categories) ?
-    <ButtonRow title="Category Pages: " posts={this.props.posts} comments={this.props.comments} categories={this.props.categories} />:
-    <Spinner />
-
+    let postList, buttonRow = <Spinner />;
+    if( Array.isArray(this.props.posts) && Array.isArray(this.props.comments) && Array.isArray(this.props.categories) ) {
+      postList = <PostList posts={this.props.posts} comments={this.props.comments} />
+      buttonRow = <ButtonRow title="Category Pages: " categories={this.props.categories} />
+    }
     return (
     <MuiThemeProvider>
       <div>

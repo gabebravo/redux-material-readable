@@ -22,10 +22,7 @@ const btnStyle = {
 const printButtons = (posts, comments, categories) => {
   return categories.map( (category, index) => {
     return (
-      <Link to={{
-        pathname: `/categories/${category}`,
-        state: { posts, comments }
-      }}>
+      <Link key={index} to={`/categories/${category}`}>
         <RaisedButton key={index} label={`${category}`} secondary={true} style={btnStyle} />
       </Link>
     )
