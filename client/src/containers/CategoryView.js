@@ -23,22 +23,25 @@ const titleStyles = {
 class CategoryView extends Component {
 
   componentDidMount() {
-    fetchPostsByCategory(this.props.match.params.category)
-      .then( response => {
-        const postsArray = sortPostsArray(response.data, 'score');
-        this.props.setCategoryPosts(postsArray);
-        fetchComments(response.data)
-          .then( response => {
-            const commentsArray = mapCommentsToArray(response);
-            this.props.setComments(commentsArray)
-          })
-      })
-    this.props.setDropdown(1);
+    console.log(this.props.location.state.posts)
+    console.log(this.props.location.state.comments)
+    // fetchPostsByCategory(this.props.match.params.category)
+    //   .then( response => {
+    //     const postsArray = sortPostsArray(response.data, 'score');
+    //     this.props.setCategoryPosts(postsArray);
+    //     fetchComments(response.data)
+    //       .then( response => {
+    //         const commentsArray = mapCommentsToArray(response);
+    //         this.props.setComments(commentsArray)
+    //       })
+    //   })
+    // this.props.setDropdown(1);
   }
 
   render() {
-    const categoryPosts = Array.isArray(this.props.categoryPosts) && Array.isArray(this.props.categoryComments) ?
-    <PostList posts={this.props.categoryPosts} comments={this.props.categoryComments} />:
+    const {posts, comments} = this.props.location.state;
+    const categoryPosts = Array.isArray(posts) && Array.isArray(comments) ?
+    <PostList posts={posts} comments={comments} />:
     <Spinner />
     return (
       <MuiThemeProvider>
@@ -52,7 +55,7 @@ class CategoryView extends Component {
               <FilterDropdown />
             </div>
           </div>
-          <h3>{categoryPosts}</h3>
+          {categoryPosts}
         </div>
       </MuiThemeProvider>
     )
@@ -60,14 +63,16 @@ class CategoryView extends Component {
 }
 
 // <PostList />
-const mapStateToProps = (state, ownProps) => ({  
-  categoryPosts: state.categoryPosts,
-  categoryComments: state.comments,
-});
-const mapDispatchToProps = dispatch => ({
-  setCategoryPosts: categories => dispatch( setCategoryPosts(categories)),
-  setComments: commentsArray => dispatch( setComments(commentsArray)),
-  setDropdown: numValue => dispatch( setDropdown(numValue)), 
-});
+// const mapStateToProps = (state, ownProps) => ({  
+//   categoryPosts: state.categoryPosts,
+//   categoryComments: state.comments,
+// });
+// const mapDispatchToProps = dispatch => ({
+//   setCategoryPosts: categories => dispatch( setCategoryPosts(categories)),
+//   setComments: commentsArray => dispatch( setComments(commentsArray)),
+//   setDropdown: numValue => dispatch( setDropdown(numValue)), 
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CategoryView)
+// export default connect(mapStateToProps, mapDispatchToProps)(CategoryView)
+
+export default CategoryView

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Grid, Row, Cell } from 'react-inline-grid'
+import { Link } from 'react-router-dom'
 import RaisedButton from 'material-ui/RaisedButton'
 import Spinner from './Spinner'
 
@@ -18,15 +19,22 @@ const btnStyle = {
   marginBottom: 10
 }
 
-const printButtons = arr => {
-  return arr.map( (category, index) => {
-    return <RaisedButton key={index} href={`/categories/${category}`} label={`${category}`} secondary={true} style={btnStyle} />
+const printButtons = (posts, comments, categories) => {
+  return categories.map( (category, index) => {
+    return (
+      <Link to={{
+        pathname: `/categories/${category}`,
+        state: { posts, comments }
+      }}>
+        <RaisedButton key={index} label={`${category}`} secondary={true} style={btnStyle} />
+      </Link>
+    )
   })
 }
 
-const ButtonRow = ({ title = null, categories = [] }) => {
-  const categoryButtons = Array.isArray(categories) ?
-    printButtons(categories): <Spinner />
+const ButtonRow = ({ title = null, categories = [], comments = [], posts = [] }) => {
+  const categoryButtons = categories.length > 0 ?
+    printButtons(posts, comments, categories): <Spinner />
   return (
     <Grid>
       <Row is="start" className="mainpage-spacing">
