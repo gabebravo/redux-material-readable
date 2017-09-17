@@ -13,7 +13,7 @@ class App extends Component {
         <Switch>
           <Route exact path='/' component={Homepage} />
           <Route path='/categories/:category' component={CategoryPage} />
-          <Route path='/post-info' component={PostPage} />
+          <Route path='/post-info/:id' component={PostPage} />
           <Route path='/post-form' component={AddPostPage} />
         </Switch>
       </Router>

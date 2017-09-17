@@ -7,6 +7,12 @@ export const fetchPosts = () => {
   })
 }
 
+export const fetchPostById = id => {
+  return axios.get(`http://localhost:3001/posts/${id}`, {
+    headers: { 'Authorization': 'readable' }
+  })
+}
+
 export const fetchPostsByCategory = category => {
   return axios.get(`http://localhost:3001/${category}/posts`, {
     headers: { 'Authorization': 'readable' }

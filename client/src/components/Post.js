@@ -5,6 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import AddIcon from 'material-ui/svg-icons/content/add'
 import RemoveIcon from 'material-ui/svg-icons/content/remove'
 import ViewIcon from 'material-ui/svg-icons/action/visibility'
+import { Link } from 'react-router-dom'
 
 const styles = {
   chip: {
@@ -33,7 +34,9 @@ const Post = ({ id, incrementScore, decrementScore, title, timestamp, author,
     <CardHeader
       title={title}
       subtitle={`${timestamp} by ${author}`}
-      avatar={<ViewIcon style={iconStyles} />}
+      avatar={
+        <Link to={`/post-info/${id}`}><ViewIcon style={iconStyles} /></Link>
+      }
     />
     <div style={styles.wrapper}>
       <Chip style={styles.chip}>{category}</Chip>
