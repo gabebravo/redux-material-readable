@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { handlePostScore, setSelectedPostComments } from '../actions'
 import { getCommentsCount } from '../utils'
 import Header from '../components/Header'
@@ -62,7 +61,6 @@ class PostView extends Component {
   }
 
   render() {
-    console.log()
     const {posts, comments, match } = this.props;
     const mainPost = Array.isArray(this.props.posts) 
       && Array.isArray(this.props.comments) ?
@@ -81,8 +79,8 @@ class PostView extends Component {
           <div className="col-xs-12 col-sm-3">
             <FilterDropdown />
           </div>
-          <div className="col-xs-12 col-sm-2" style={{ marginTop: '1.6rem' }}>
-            <Link to={`/post-form`}><AddButton btnText="Add Comments"/></Link>
+          <div onClick={this.toggle} className="col-xs-12 col-sm-2" style={{ marginTop: '1.6rem' }}>
+            <AddButton btnText="Add Comments"/>
           </div>
         </div>
         {

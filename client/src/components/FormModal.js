@@ -24,8 +24,10 @@ class FormModal extends Component {
         <Dialog
           title="Dialog With Actions"
           actions={actions}
-          modal={true}
+          modal={false}
           open={this.props.show}
+          onRequestClose={this.handleClose}
+          autoScrollBodyContent={true}
         >
           <Form/>
         </Dialog>

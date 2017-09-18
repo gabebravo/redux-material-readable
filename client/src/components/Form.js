@@ -10,7 +10,7 @@ const uuidv4 = require('uuid/v4');
 const styles = {
   display: 'inline-grid',
   marginLeft: '20px',
-  marginTop: '20px'
+  marginTop: '20px', 
 }
 
 const btnStyles = { 
