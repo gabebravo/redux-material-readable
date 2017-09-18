@@ -52,7 +52,7 @@ class PostView extends Component {
         author={post.author}
         category={post.category}
         voteScore={post.voteScore}
-        body={post.body} // NOTE: true/false below === isIncFlag
+        body={post.body} // NOTE: true/false below === isIncrementFlag
         incrementScore={() => this.props.handlePostScore(post.id, post.voteScore, true)}
         decrementScore={() => this.props.handlePostScore(post.id, post.voteScore, false)}
         btnArr={true}

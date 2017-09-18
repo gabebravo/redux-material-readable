@@ -19,7 +19,7 @@ const btnStyles = {
   backgroundColor: 'rgb(255, 64, 129)' 
 }
 
-export class Form extends Component {
+export class PostForm extends Component {
 
   handleMenu = (event, index, value) => {
     switch(event.target.id){
@@ -66,5 +66,5 @@ export class Form extends Component {
 const mapStateToProps = ({ formData }) => ({ formData });
 const actions = { setFormData, handleAddingPost }
 
-export default connect(mapStateToProps, actions)(Form)
+export default connect(mapStateToProps, actions)(PostForm)
 

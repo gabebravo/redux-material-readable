@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Header from '../components/Header'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import Form from '../components/Form'
+import PostForm from '../components/PostForm'
 
 export default class FormView extends Component {
 
@@ -10,7 +10,7 @@ export default class FormView extends Component {
       <MuiThemeProvider>
         <div>
           <Header />
-          <Form />
+          <PostForm />
         </div>
       </MuiThemeProvider>
     )

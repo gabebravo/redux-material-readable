@@ -60,6 +60,25 @@ export const setSelectedPostComments = comments => ({
   comments
 })
 
+export const UPDATE_COMMENT_SCORE = 'UPDATE_COMMENT_SCORE';
+export const updateCommentScore = (id, newScore) => {
+  return ({
+  type: UPDATE_COMMENT_SCORE,
+  id, newScore
+  })
+}
+
+export const handleCommentScore = (id, score, isIncFlag) => {
+  return (dispatch) => {
+    axios({
+      method: 'put',
+      url: `http://localhost:3001/comments/${id}`,
+      headers: { 'Authorization': 'readable' },
+      data: isIncFlag ? { voteScore: (score + 1) } : { voteScore: (score - 1) }
+    }).then( response => dispatch(updateCommentScore(id, response.data.voteScore)))
+  }
+}
+
 // CATEGORIES ACTIONS & ACTION CREATORS
 export const SET_CATEGORIES = 'SET_CATEGORIES';
 export const setCategories = categories => ({
