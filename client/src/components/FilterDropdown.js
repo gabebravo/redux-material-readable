@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { setFilterDropdown, setPosts } from '../actions'
-import { sortPostsArray } from '../utils'
+import { setFilterDropdown, setPosts, setSelectedPostComments } from '../actions'
+import { sortArray } from '../utils'
 import SelectField from 'material-ui/SelectField';
 import Spinner from './Spinner';
 import MenuItem from 'material-ui/MenuItem';
@@ -17,8 +17,14 @@ class FilterDropdown extends Component {
         value={this.props.filterDropdown}
         onChange={this.handleChange}
       >
-        <MenuItem value={1} onClick={() => this.props.filterPosts(sortPostsArray(this.props.posts, 'score'))} primaryText="Score" />
-        <MenuItem value={2} onClick={() => this.props.filterPosts(sortPostsArray(this.props.posts, 'date'))} primaryText="Date" />
+        <MenuItem value={1} onClick={ this.props.filterType === 'posts' ?
+            () => this.props.filterPosts(sortArray(this.props.posts, 'score')) :
+            () => this.props.filterComments(sortArray(this.props.selectedPostComments, 'score'))
+          } primaryText="Score" />
+        <MenuItem value={2} onClick={ this.props.filterType === 'posts' ?
+            () => this.props.filterPosts(sortArray(this.props.posts, 'date')) :
+            () => this.props.filterComments(sortArray(this.props.selectedPostComments, 'date'))
+          } primaryText="Date" />
       </SelectField>): 
       <Spinner />
     return (
@@ -27,10 +33,11 @@ class FilterDropdown extends Component {
   }
 }
 
-const mapStateToProps = ({ posts, filterDropdown }) => ({ posts, filterDropdown });
+const mapStateToProps = ({ posts, selectedPostComments, filterDropdown }) => ({ posts, selectedPostComments, filterDropdown });
 const mapDispatchToProps = dispatch => ({
   setDropdown: numValue => dispatch( setFilterDropdown(numValue)),
   filterPosts: posts => dispatch( setPosts(posts)),
+  filterComments: comments => dispatch( setSelectedPostComments(comments)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilterDropdown)

@@ -1,7 +1,7 @@
 // IMPORT COMBINEREDUCERS FROM REDUX 
 import { combineReducers } from 'redux';
 import { SET_POSTS, ADD_POST, UPDATE_POST_SCORE, SET_COMMENTS, SET_CATEGORIES, 
-  SET_FORM_DATA, SET_MAIN_POST, SET_FILTER_DROPDOWN
+  SET_FORM_DATA, SET_FILTER_DROPDOWN, SET_SELECTED_POST_COMMENTS
 } from '../actions/index'; // IMPORT THE ACTIONS
 
 const posts = (state = {}, action) => {
@@ -21,18 +21,6 @@ const posts = (state = {}, action) => {
   }
 }
 
-const mainPost = (state = {}, action) => {
-  switch(action.type) {
-    case SET_MAIN_POST:
-    return {
-      post: action.post,
-      comments: action.comments
-    }
-    default: 
-      return state;
-  }
-}
-
 const comments = (state = {}, action) => {
   switch (action.type) { 
     case SET_COMMENTS: 
@@ -41,6 +29,15 @@ const comments = (state = {}, action) => {
       return state;
   }
 }
+
+const selectedPostComments = (state = {}, action) => {
+  switch (action.type){
+    case SET_SELECTED_POST_COMMENTS:
+      return action.comments;
+    default: 
+      return state;
+  }
+} 
 
 const categories = (state = {}, action) => {
   switch (action.type) { 
@@ -72,5 +69,5 @@ const formData = (state = { category: 'React' }, action) => {
 }
 
 export default combineReducers({
-  posts, comments, categories, filterDropdown, formData, mainPost
+  posts, comments, categories, filterDropdown, formData, selectedPostComments
 });

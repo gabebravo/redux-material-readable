@@ -54,7 +54,7 @@ export const getCommentsCount = commentsArray => {
   }, {});
 }
 
-export const sortPostsArray = (postsArr, sortType) => {
+export const sortArray = (postsArr, sortType) => {
   const arr = [...postsArr];
   switch(sortType){
     case 'score' : 

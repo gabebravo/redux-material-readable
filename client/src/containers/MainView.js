@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { setPosts, setComments, setCategories } from '../actions'
 import { fetchPosts, fetchComments, fetchCategories, 
-  mapCommentsToArray, sortPostsArray } from '../utils'
+  mapCommentsToArray, sortArray } from '../utils'
 import Header from '../components/Header'
 import ButtonRow from '../components/ButtonRow'
 import Spinner from '../components/Spinner'
@@ -40,7 +40,7 @@ class MainView extends Component {
             return response
           })
           .then( response => {
-            const postsArray = sortPostsArray(response.data, 'score');
+            const postsArray = sortArray(response.data, 'score');
             this.props.setPosts(postsArray);
             fetchComments(response.data)
               .then( response => {
@@ -67,7 +67,7 @@ class MainView extends Component {
             <h4 style={titleStyles}>Posts</h4>
           </div>
           <div className="col-xs-12 col-sm-3">
-            <FilterDropdown />
+            <FilterDropdown filterType="posts" />
           </div>
           <div className="col-xs-12 col-sm-2" style={{ marginTop: '1.6rem' }}>
             <Link to={`/post-form`}><AddButton btnText="Add Post"/></Link>

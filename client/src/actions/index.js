@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { fetchPostById, fetchComment } from '../utils'
 
 // POST ACTIONS & ACTION CREATORS
 export const SET_POSTS = 'SET_POSTS';
@@ -48,28 +47,18 @@ export const handlePostScore = (id, score, isIncFlag) => {
   }
 }
 
-export const SET_MAIN_POST = 'SET_MAIN_POST';
-export const setMainPost = (post, comments) => {
-  post.comments = comments.length
-  return ({
-      type: SET_MAIN_POST,
-      post, comments
-  })
-}
-
-export const handleMainPost = id => {
-  return (dispatch) => {
-    axios.all([fetchPostById(id), fetchComment(id)])
-        .then( axios.spread( (posts, comments) => dispatch(setMainPost(posts.data, comments.data))));
-  }
-}
-
 // COMMENT ACTIONS & ACTION CREATORS
 export const SET_COMMENTS = 'SET_COMMENTS';
 export const setComments = comments => ({
   type: SET_COMMENTS, 
   comments
 });
+
+export const SET_SELECTED_POST_COMMENTS = 'SET_SELECTED_POST_COMMENTS';
+export const setSelectedPostComments = comments => ({
+  type: SET_SELECTED_POST_COMMENTS, 
+  comments
+})
 
 // CATEGORIES ACTIONS & ACTION CREATORS
 export const SET_CATEGORIES = 'SET_CATEGORIES';

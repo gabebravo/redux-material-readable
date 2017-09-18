@@ -18,11 +18,51 @@ const defaultData = {
     parentId: "d14e77f3203745cc9ad08e2eba433fad",
     timestamp: 1469479767190,
     body: 'Comments. Are. Cool.',
-    author: 'thingone',
+    author: 'Jim',
     voteScore: -5,
     deleted: false,
     parentDeleted: false
-  }
+  },
+  "a9b31c4a9c1611e7abc4cec278b6b50a": {
+    id: 'a9b31c4a9c1611e7abc4cec278b6b50a',
+    parentId: "95b9bdbfe2504887aa8e9b407a766513",
+    timestamp: 1468166872634,
+    body: 'Redux is the best.',
+    author: 'Lenny',
+    voteScore: 6,
+    deleted: false,
+    parentDeleted: false 
+  },
+  "a9b3200a9c1611e7abc4cec278b6b50a": {
+    id: 'a9b3200a9c1611e7abc4cec278b6b50a',
+    parentId: "95b9bdbfe2504887aa8e9b407a766513",
+    timestamp: 1469479767190,
+    body: 'I still love redux',
+    author: 'thingone',
+    voteScore: 5,
+    deleted: false,
+    parentDeleted: false
+  },
+  "a9b322a89c1611e7abc4cec278b6b50a": {
+    id: 'a9b322a89c1611e7abc4cec278b6b50a',
+    parentId: "d14e77f3203745cc9ad08e2eba433fad",
+    timestamp: 1469479767190,
+    body: 'I am all about leaving JS comments',
+    author: 'Tom',
+    voteScore: 2,
+    deleted: false,
+    parentDeleted: false
+  },
+  "a9b325149c1611e7abc4cec278b6b50a": {
+    id: 'a9b325149c1611e7abc4cec278b6b50a',
+    parentId: "5b3a77e65e834294917c5ca6ada9d0db",
+    timestamp: 1468166872634,
+    body: 'Seriously, react all the way!',
+    author: 'Sam',
+    voteScore: 3,
+    deleted: false,
+    parentDeleted: false 
+  },
 }
 
 function getData (token) {

@@ -29,7 +29,7 @@ const btnStlyes = {
 }
 
 const Post = ({ id, incrementScore, decrementScore, title, timestamp, author, 
-  category, comments, voteScore, body }) => (
+  category, comments, voteScore, body, btnArr }) => (
   <Card>
     <CardHeader
       title={title}
@@ -48,6 +48,13 @@ const Post = ({ id, incrementScore, decrementScore, title, timestamp, author,
     <div style={{ display: 'inline' }}>
       <RaisedButton onClick={incrementScore} label="Score" secondary={true} style={btnStlyes} icon={<AddIcon/>} />
       <RaisedButton onClick={decrementScore} label="Score" secondary={true} style={btnStlyes} icon={<RemoveIcon/>} />
+      {
+        btnArr && 
+        (<div style={{ display: 'inline' }}>
+          <RaisedButton label="Edit" secondary={true} style={btnStlyes} />
+          <RaisedButton label="Delete" secondary={true} style={btnStlyes} />
+        </div>)
+      }
     </div>
     </CardActions>
   </Card>

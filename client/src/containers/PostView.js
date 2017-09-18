@@ -1,16 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { handleMainPost } from '../actions'
+import { handlePostScore, setSelectedPostComments } from '../actions'
+import { getCommentsCount } from '../utils'
 import Header from '../components/Header'
 import Spinner from '../components/Spinner'
-import MainPost from '../components/MainPost'
+import Post from '../components/Post'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import FilterDropdown from '../components/FilterDropdown'
 import AddButton from '../components/AddButton'
 import CommentList from '../components/CommentList'
 import FormModal from '../components/FormModal'
+const moment = require('moment');
 
 const titleStyles = {
   boxSizing: 'border-box',
@@ -25,10 +27,6 @@ const titleStyles = {
 
 class PostView extends Component {
 
-  componentWillMount(){
-    this.props.handleMainPost(this.props.match.params.id)
-  }
-
   state = {
     isOpen: false,
   };
@@ -37,10 +35,38 @@ class PostView extends Component {
     this.setState({isOpen: !this.state.isOpen });
   };
 
+  componentDidMount(){
+    this.props.setSelectedPostComments([...this.props.comments].filter( comment => comment.parentId === this.props.match.params.id))
+  }
+
+  convertUnixToDate = timestamp => moment(new Date().setTime(timestamp)).format("MM/DD/YYYY");
+
+  buildMainPost = (posts, id, comments) => {
+    const countIds = getCommentsCount(comments);
+    const post = [...posts].filter( post => post.id === id )[0]
+    return (
+      <Post 
+        id={post.id}
+        title={post.title}
+        comments={countIds[post.id] || 0}
+        timestamp={this.convertUnixToDate(post.timestamp)}
+        author={post.author}
+        category={post.category}
+        voteScore={post.voteScore}
+        body={post.body} // NOTE: true/false below === isIncFlag
+        incrementScore={() => this.props.handlePostScore(post.id, post.voteScore, true)}
+        decrementScore={() => this.props.handlePostScore(post.id, post.voteScore, false)}
+        btnArr={true}
+      />
+    )
+  }
+
   render() {
-    const mainPost = typeof this.props.mainPost.post === 'object' 
-      && Array.isArray(this.props.mainPost.comments) ? 
-      <MainPost postData={this.props.mainPost.post} />
+    console.log()
+    const {posts, comments, match } = this.props;
+    const mainPost = Array.isArray(this.props.posts) 
+      && Array.isArray(this.props.comments) ?
+        this.buildMainPost(posts, match.params.id, comments)
       : <Spinner />
     return (
       <MuiThemeProvider>
@@ -60,8 +86,8 @@ class PostView extends Component {
           </div>
         </div>
         {
-          Array.isArray(this.props.mainPost.comments) ?
-          <CommentList comments={this.props.mainPost.comments} /> : 
+          Array.isArray(this.props.selectedPostComments) ?
+          <CommentList comments={this.props.selectedPostComments} /> : 
           <Spinner />
         }
       <FormModal show={this.state.isOpen} modalHandler={this.toggle} />
@@ -71,6 +97,6 @@ class PostView extends Component {
   }
 }
 
-const mapStateToProps = ({ posts, comments, mainPost }) => ({ posts, comments, mainPost });
-const actions = { handleMainPost }
+const mapStateToProps = ({ posts, comments, selectedPostComments }) => ({ posts, comments, selectedPostComments });
+const actions = { handlePostScore, setSelectedPostComments }
 export default connect(mapStateToProps, actions)(PostView)
