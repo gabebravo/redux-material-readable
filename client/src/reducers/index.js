@@ -2,7 +2,7 @@
 import { combineReducers } from 'redux';
 import { SET_POSTS, ADD_POST, UPDATE_POST_SCORE, SET_COMMENTS, SET_CATEGORIES, 
    SET_FORM_DATA, SET_FILTER_DROPDOWN, UPDATE_COMMENT_SCORE, SET_ADD_COMMENT_MODAL, 
-   RESET_FORM
+   RESET_FORM, SET_GENERIC_MODAL
  } from '../actions' // IMPORT THE ACTIONS
 
 const posts = (state = {}, action) => {
@@ -73,6 +73,17 @@ const commentModal = (state = { isOpen: false}, action) => {
   }
 }
 
+const genericModal = (state = { isOpen: false}, action) => {
+  switch( action.type ){
+    case SET_GENERIC_MODAL :
+      return Object.assign({}, state, {
+        isOpen: !action.isOpen
+      })
+    default:
+      return state;
+  }
+}
+
 const formData = (state = {}, action) => {
   const { key, val, obj } = action;
   switch (action.type) { 
@@ -88,5 +99,6 @@ const formData = (state = {}, action) => {
 }
 
 export default combineReducers({
-  posts, comments, categories, filterDropdown, formData, commentModal
+  posts, comments, categories, filterDropdown, formData, 
+    commentModal, genericModal
 });

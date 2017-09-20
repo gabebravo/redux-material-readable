@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { setFormData, handleAddingPost, resetFormData } from '../actions'
+import { setFormData, handleAddingPost, resetFormData, setGenericModal } from '../actions'
 import TextField from 'material-ui/TextField'
 import DropDownMenu from 'material-ui/DropDownMenu'
 import MenuItem from 'material-ui/MenuItem'
@@ -32,7 +32,7 @@ export class PostForm extends Component {
     switch(event.target.id){
       case 'title': this.props.setFormData('title', event.target.value)
         break;
-      case 'text': this.props.setFormData('body', event.target.value)
+      case 'body': this.props.setFormData('body', event.target.value)
         break;
       case 'author': this.props.setFormData('author', event.target.value)
         break;
@@ -44,15 +44,16 @@ export class PostForm extends Component {
   submitData = () => {
     this.props.handleAddingPost(this.props.formData);
     this.props.resetFormData();
+    this.props.setGenericModal( this.props.isOpen )
   }
 
   render() {
     return (
       <div>
         <div style={styles}>
-          <TextField type="text" onChange={this.handleMenu} id="title" name="title" hintText="Enter Title" />
-          <TextField type="text" onChange={this.handleMenu} id="text" name="text" hintText="Enter Text" />
-          <TextField type="text" onChange={this.handleMenu} id="author" name="author" hintText="Enter Author" />
+          <TextField type="text" value={this.props.formData.title || ''} onChange={this.handleMenu} id="title" name="title" hintText="Enter Title" />
+          <TextField type="text" value={this.props.formData.body || ''} onChange={this.handleMenu} id="body" name="body" hintText="Enter Text" />
+          <TextField type="text" value={this.props.formData.author || ''} onChange={this.handleMenu} id="author" name="author" hintText="Enter Author" />
           <DropDownMenu value={this.props.formData.category}
               onChange={this.handleMenu}>
             <MenuItem value="react" primaryText="React" />
@@ -68,8 +69,8 @@ export class PostForm extends Component {
   }
 }
 
-const mapStateToProps = ({ formData }) => ({ formData });
-const actions = { setFormData, handleAddingPost, resetFormData }
+const mapStateToProps = ({ formData, isOpen }) => ({ formData, isOpen });
+const actions = { setFormData, handleAddingPost, resetFormData, setGenericModal }
 
 export default connect(mapStateToProps, actions)(PostForm)
 
