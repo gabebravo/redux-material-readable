@@ -45,7 +45,7 @@ class MainView extends Component {
             fetchComments(response.data)
               .then( response => {
                 const commentsArray = mapCommentsToArray(response);
-                this.props.setComments(commentsArray)
+                this.props.setComments(sortArray(commentsArray, 'score'))
               })
           })
       })

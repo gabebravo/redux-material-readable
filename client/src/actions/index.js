@@ -54,21 +54,17 @@ export const setComments = comments => ({
   comments
 });
 
-export const SET_SELECTED_POST_COMMENTS = 'SET_SELECTED_POST_COMMENTS';
-export const setSelectedPostComments = comments => ({
-  type: SET_SELECTED_POST_COMMENTS, 
-  comments
-})
-
 export const UPDATE_COMMENT_SCORE = 'UPDATE_COMMENT_SCORE';
 export const updateCommentScore = (id, newScore) => {
+  console.log(newScore)
   return ({
-  type: UPDATE_COMMENT_SCORE,
-  id, newScore
+    type: UPDATE_COMMENT_SCORE,
+    id, newScore
   })
 }
 
 export const handleCommentScore = (id, score, isIncFlag) => {
+  console.log(score)
   return (dispatch) => {
     axios({
       method: 'put',
@@ -98,3 +94,14 @@ export const setFormData = (key, val) => ({
   type: SET_FORM_DATA, 
   key, val
 });
+
+export const RESET_FORM = 'RESET_FORM';
+export const resetFormData = () => ({
+  type: RESET_FORM
+})
+
+export const SET_ADD_COMMENT_MODAL = 'SET_ADD_COMMENT_MODAL';
+export const setAddCommentModal = isOpen => ({
+  type: SET_ADD_COMMENT_MODAL,
+  isOpen
+})

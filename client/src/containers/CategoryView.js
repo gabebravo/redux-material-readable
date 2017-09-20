@@ -34,7 +34,7 @@ class CategoryView extends Component {
               <h4 style={titleStyles}>Posts</h4>
             </div>
             <div className="col-xs-12 col-sm-3">
-              <FilterDropdown />
+              <FilterDropdown filterType="posts" />
             </div>
           </div>
           <PostList posts={postsByCategory} comments={comments} />

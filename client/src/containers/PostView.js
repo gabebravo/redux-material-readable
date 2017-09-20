@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { handlePostScore, setSelectedPostComments } from '../actions'
+import { handlePostScore, setAddCommentModal } from '../actions'
 import { getCommentsCount } from '../utils'
 import Header from '../components/Header'
 import Spinner from '../components/Spinner'
@@ -26,17 +26,9 @@ const titleStyles = {
 
 class PostView extends Component {
 
-  state = {
-    isOpen: false,
-  };
-
   toggle = () => {
-    this.setState({isOpen: !this.state.isOpen });
+    this.props.setAddCommentModal(!this.props.commentModal.isOpen);
   };
-
-  componentDidMount(){
-    this.props.setSelectedPostComments([...this.props.comments].filter( comment => comment.parentId === this.props.match.params.id))
-  }
 
   convertUnixToDate = timestamp => moment(new Date().setTime(timestamp)).format("MM/DD/YYYY");
 
@@ -77,24 +69,24 @@ class PostView extends Component {
             <h4 style={titleStyles}>Comments</h4>
           </div>
           <div className="col-xs-12 col-sm-3">
-            <FilterDropdown />
+            <FilterDropdown filterType="comments" />
           </div>
           <div onClick={this.toggle} className="col-xs-12 col-sm-2" style={{ marginTop: '1.6rem' }}>
             <AddButton btnText="Add Comments"/>
           </div>
         </div>
         {
-          Array.isArray(this.props.selectedPostComments) ?
-          <CommentList comments={this.props.selectedPostComments} /> : 
+          Array.isArray(this.props.comments) ?
+          <CommentList comments={this.props.comments} id={match.params.id} /> : 
           <Spinner />
         }
-      <FormModal show={this.state.isOpen} modalHandler={this.toggle} />
+      <FormModal show={this.props.commentModal.isOpen} modalHandler={this.toggle} />
       </div>
       </MuiThemeProvider>
     )
   }
 }
 
-const mapStateToProps = ({ posts, comments, selectedPostComments }) => ({ posts, comments, selectedPostComments });
-const actions = { handlePostScore, setSelectedPostComments }
+const mapStateToProps = ({ posts, comments, commentModal }) => ({ posts, comments, commentModal });
+const actions = { handlePostScore, setAddCommentModal }
 export default connect(mapStateToProps, actions)(PostView)

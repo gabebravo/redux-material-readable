@@ -1,19 +1,22 @@
 // IMPORT COMBINEREDUCERS FROM REDUX 
 import { combineReducers } from 'redux';
 import { SET_POSTS, ADD_POST, UPDATE_POST_SCORE, SET_COMMENTS, SET_CATEGORIES, 
-  SET_FORM_DATA, SET_FILTER_DROPDOWN, SET_SELECTED_POST_COMMENTS, UPDATE_COMMENT_SCORE
-} from '../actions/index'; // IMPORT THE ACTIONS
+   SET_FORM_DATA, SET_FILTER_DROPDOWN, UPDATE_COMMENT_SCORE, SET_ADD_COMMENT_MODAL, 
+   RESET_FORM
+ } from '../actions' // IMPORT THE ACTIONS
 
 const posts = (state = {}, action) => {
   switch (action.type) { 
     case SET_POSTS: 
       return action.posts;
-    case ADD_POST: return [...state, action.post];
+    case ADD_POST: return action.post;
     case UPDATE_POST_SCORE: {
       return [...state].map( post => {
         if(post.id === action.id){
-          post.voteScore = action.newScore
-        } return post;
+          let copy = Object.assign({}, post);
+          copy.voteScore = action.newScore;
+          return copy;
+        } else { return post };
       });
     }
     default:
@@ -27,9 +30,11 @@ const comments = (state = {}, action) => {
       return action.comments;
     case UPDATE_COMMENT_SCORE: {
       return [...state].map( comment => {
-        if( comment.id === action.id ) {
-          comment.voteScore = action.newScore
-        } return comment;
+        if(comment.id === action.id){
+          let copy = Object.assign({}, comment);
+          copy.voteScore = action.newScore;
+          return copy;
+        } else { return comment };
       })
     }
     default:
@@ -37,16 +42,7 @@ const comments = (state = {}, action) => {
   }
 }
 
-const selectedPostComments = (state = {}, action) => {
-  switch (action.type){
-    case SET_SELECTED_POST_COMMENTS:
-      return action.comments;
-    default: 
-      return state;
-  }
-} 
-
-const categories = (state = {}, action) => {
+const categories = (state = [], action) => {
   switch (action.type) { 
     case SET_CATEGORIES: 
       return action.categories;
@@ -55,26 +51,42 @@ const categories = (state = {}, action) => {
   }
 }
 
-const filterDropdown = (state = 1, action) => {
+const filterDropdown = (state = { numValue: 1}, action) => {
   switch (action.type) { 
     case SET_FILTER_DROPDOWN: 
-      return action.numValue;
+    return Object.assign({}, state, {
+      numValue: action.numValue
+    }) 
     default:
       return state;
   }
 }
 
-const formData = (state = { category: 'React' }, action) => {
-  const { key, val } = action;
+const commentModal = (state = { isOpen: false}, action) => {
+  switch (action.type) { 
+    case SET_ADD_COMMENT_MODAL:
+      return Object.assign({}, state, {
+        isOpen: action.isOpen
+      }) 
+    default:
+      return state;
+  }
+}
+
+const formData = (state = {}, action) => {
+  const { key, val, obj } = action;
   switch (action.type) { 
     case SET_FORM_DATA: 
-      state[key] = val;
-    return state;
+    return Object.assign({}, state, {
+      [`${key}`]: val
+    })
+    case RESET_FORM :
+    return Object.assign({}, {}, {})
     default:
       return state;
   }
 }
 
 export default combineReducers({
-  posts, comments, categories, filterDropdown, formData, selectedPostComments
+  posts, comments, categories, filterDropdown, formData, commentModal
 });

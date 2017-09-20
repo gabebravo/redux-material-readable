@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { setFormData, handleAddingPost } from '../actions'
+import { setFormData, handleAddingPost, resetFormData } from '../actions'
 import TextField from 'material-ui/TextField'
 import DropDownMenu from 'material-ui/DropDownMenu'
 import MenuItem from 'material-ui/MenuItem'
@@ -21,6 +21,13 @@ const btnStyles = {
 
 export class PostForm extends Component {
 
+  componentDidMount() {
+    this.props.setFormData('id', uuidv4().split('-').join('').toString());
+    this.props.setFormData('timestamp', Date.now());
+    this.props.setFormData('voteScore', 1);
+    this.props.setFormData('category', 'react');
+  }
+
   handleMenu = (event, index, value) => {
     switch(event.target.id){
       case 'title': this.props.setFormData('title', event.target.value)
@@ -30,15 +37,13 @@ export class PostForm extends Component {
       case 'author': this.props.setFormData('author', event.target.value)
         break;
       default:
-        this.props.setFormData('category', value)
+        this.props.setFormData('category', value.toLowerCase())
     }
   }
 
-  printData = () => {
-    this.props.setFormData('id', uuidv4().split('-').join(''));
-    this.props.setFormData('timestamp', Date.now());
-    this.props.setFormData('voteScore', 1);
-    this.props.handleAddingPost(this.props.formData)
+  submitData = () => {
+    this.props.handleAddingPost(this.props.formData);
+    this.props.resetFormData();
   }
 
   render() {
@@ -50,13 +55,13 @@ export class PostForm extends Component {
           <TextField type="text" onChange={this.handleMenu} id="author" name="author" hintText="Enter Author" />
           <DropDownMenu value={this.props.formData.category}
               onChange={this.handleMenu}>
-            <MenuItem value={'React'} primaryText="React" />
-            <MenuItem value={'Redux'} primaryText="Redux" />
-            <MenuItem value={'Javascript'} primaryText="Javascript" />
+            <MenuItem value="react" primaryText="React" />
+            <MenuItem value="redux" primaryText="Redux" />
+            <MenuItem value="javascript" primaryText="Javascript" />
           </DropDownMenu>
         </div>
         <div>
-          <RaisedButton onClick={this.printData} style={btnStyles} label="Submit" secondary={true} />
+          <RaisedButton onClick={this.submitData} style={btnStyles} label="Submit" secondary={true} />
         </div>
       </div>
     )
@@ -64,7 +69,7 @@ export class PostForm extends Component {
 }
 
 const mapStateToProps = ({ formData }) => ({ formData });
-const actions = { setFormData, handleAddingPost }
+const actions = { setFormData, handleAddingPost, resetFormData }
 
 export default connect(mapStateToProps, actions)(PostForm)
 

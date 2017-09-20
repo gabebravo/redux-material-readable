@@ -1,8 +1,10 @@
 import React from 'react'
 import Comment from './Comment'
+import Spinner from './Comment'
 
-const printComments = arr => {
-  return arr.map( (comment, index) => {
+const printComments = (arr, id) => {
+  const filteredComments = arr.filter( comment => comment.parentId === id )
+  return filteredComments.map( (comment, index) => {
     return (
       <Comment 
         key={index}
@@ -17,8 +19,8 @@ const printComments = arr => {
   })
 }
 
-const CommentList = ({comments}) => (
-  <div>{printComments(comments)}</div>
-);
+const CommentList = ({ comments, id }) => {
+  return <div>{printComments(comments, id)}</div>
+}
 
 export default CommentList;

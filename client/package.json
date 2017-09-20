@@ -5,7 +5,10 @@
   "dependencies": {
     "await": "^0.2.6",
     "axios": "^0.16.2",
+    "deep-freeze": "0.0.1",
+    "expect": "^21.1.0",
     "flexboxgrid": "^6.3.1",
+    "immutable": "^3.8.1",
     "lodash": "^4.17.4",
     "material-ui": "^0.19.1",
     "moment": "^2.18.1",
@@ -20,6 +23,7 @@
   },
   "devDependencies": {
     "react-scripts": "1.0.13",
+    "redux-freeze": "^0.1.5",
     "redux-logger": "^3.0.6"
   },
   "scripts": {

@@ -12,10 +12,10 @@ class PostList extends Component {
 
   printPosts = arr => {
     const countIds = getCommentsCount(this.props.comments);
-    return arr.map( post => {
+    return arr.map( (post, index) => {
       return (
         <Post 
-          key={post.id}
+          key={index}
           id={post.id}
           title={post.title}
           comments={countIds[post.id] || 0}
