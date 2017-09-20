@@ -29,7 +29,7 @@ const btnStlyes = {
 }
 
 const Post = ({ id, incrementScore, decrementScore, title, timestamp, author, 
-  category, comments, voteScore, body, btnArr }) => (
+  category, comments, voteScore, body, btnArr = false }) => (
   <Card>
     <CardHeader
       title={title}
@@ -51,7 +51,7 @@ const Post = ({ id, incrementScore, decrementScore, title, timestamp, author,
       {
         btnArr && 
         (<div style={{ display: 'inline' }}>
-          <RaisedButton label="Edit" secondary={true} style={btnStlyes} />
+          <Link to={`/post-edit/${id}`}><RaisedButton label="Edit" secondary={true} style={btnStlyes} /></Link>
           <RaisedButton label="Delete" secondary={true} style={btnStlyes} />
         </div>)
       }

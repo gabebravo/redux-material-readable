@@ -2,7 +2,7 @@
 import { combineReducers } from 'redux';
 import { SET_POSTS, ADD_POST, UPDATE_POST_SCORE, SET_COMMENTS, SET_CATEGORIES, 
    SET_FORM_DATA, SET_FILTER_DROPDOWN, UPDATE_COMMENT_SCORE, SET_ADD_COMMENT_MODAL, 
-   RESET_FORM, SET_GENERIC_MODAL
+   RESET_FORM, SET_GENERIC_MODAL, SET_EDIT_POST, UPDATE_POST_DATA
  } from '../actions' // IMPORT THE ACTIONS
 
 const posts = (state = {}, action) => {
@@ -10,6 +10,11 @@ const posts = (state = {}, action) => {
     case SET_POSTS: 
       return action.posts;
     case ADD_POST: return action.post;
+    case UPDATE_POST_DATA: {
+        const copyOfPosts = [ ...state].filter(post => post.id !== action.updatedPost.id); 
+        return Object.assign(copyOfPosts, {}, action.updatedPost);
+    }
+
     case UPDATE_POST_SCORE: {
       return [...state].map( post => {
         if(post.id === action.id){
@@ -20,6 +25,15 @@ const posts = (state = {}, action) => {
       });
     }
     default:
+      return state;
+  }
+}
+
+const editPost = (state = {}, action) => {
+  switch(action.type) {
+    case SET_EDIT_POST :
+    return action.post
+    default: 
       return state;
   }
 }
@@ -85,7 +99,7 @@ const genericModal = (state = { isOpen: false}, action) => {
 }
 
 const formData = (state = {}, action) => {
-  const { key, val, obj } = action;
+  const { key, val } = action;
   switch (action.type) { 
     case SET_FORM_DATA: 
     return Object.assign({}, state, {
@@ -100,5 +114,5 @@ const formData = (state = {}, action) => {
 
 export default combineReducers({
   posts, comments, categories, filterDropdown, formData, 
-    commentModal, genericModal
+    commentModal, genericModal, editPost
 });

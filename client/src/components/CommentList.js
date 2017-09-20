@@ -1,6 +1,5 @@
 import React from 'react'
 import Comment from './Comment'
-import Spinner from './Comment'
 
 const printComments = (arr, id) => {
   const filteredComments = arr.filter( comment => comment.parentId === id )

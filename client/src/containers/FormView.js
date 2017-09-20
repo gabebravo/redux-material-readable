@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom'
 import { setGenericModal } from '../actions'
 
 import Header from '../components/Header'
@@ -19,8 +18,8 @@ class FormView extends Component {
       <MuiThemeProvider>
         <div>
           <Header />
-          <PostForm />
-          <GenericModal title="Success" text={"You have saved a new post. Hit OK to go back to the homepage."} 
+          <PostForm type="add" />
+          <GenericModal title="Success" text={"You have saved a new post. Good job. It will now appear on the homepage."} 
             show={this.props.genericModal.isOpen || false} modalHandler={this.toggle}
           />
         </div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { setFormData, handleAddingPost, resetFormData, setGenericModal } from '../actions'
+import { setFormData, handleAddingPost, handleUpdatingPost, resetFormData, setGenericModal } from '../actions'
 import TextField from 'material-ui/TextField'
 import DropDownMenu from 'material-ui/DropDownMenu'
 import MenuItem from 'material-ui/MenuItem'
@@ -22,10 +22,16 @@ const btnStyles = {
 export class PostForm extends Component {
 
   componentDidMount() {
-    this.props.setFormData('id', uuidv4().split('-').join('').toString());
-    this.props.setFormData('timestamp', Date.now());
-    this.props.setFormData('voteScore', 1);
-    this.props.setFormData('category', 'react');
+    if ( this.props.type === 'add') {
+      this.props.setFormData('id', uuidv4().split('-').join('').toString());
+      this.props.setFormData('timestamp', Date.now());
+      this.props.setFormData('voteScore', 1);
+      this.props.setFormData('category', 'react');
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.resetFormData();
   }
 
   handleMenu = (event, index, value) => {
@@ -41,8 +47,12 @@ export class PostForm extends Component {
     }
   }
 
-  submitData = () => {
-    this.props.handleAddingPost(this.props.formData);
+  submitData = formOperation => { // logic to pick form operation
+    if( formOperation === 'add' ) {
+      this.props.handleAddingPost(this.props.formData);
+    } else if ( formOperation === 'edit' ) {
+      this.props.handleUpdatingPost(this.props.formData);
+    }
     this.props.resetFormData();
     this.props.setGenericModal( this.props.isOpen )
   }
@@ -62,7 +72,7 @@ export class PostForm extends Component {
           </DropDownMenu>
         </div>
         <div>
-          <RaisedButton onClick={this.submitData} style={btnStyles} label="Submit" secondary={true} />
+          <RaisedButton onClick={() => this.submitData(this.props.type)} style={btnStyles} label="Submit" secondary={true} />
         </div>
       </div>
     )
@@ -70,7 +80,7 @@ export class PostForm extends Component {
 }
 
 const mapStateToProps = ({ formData, isOpen }) => ({ formData, isOpen });
-const actions = { setFormData, handleAddingPost, resetFormData, setGenericModal }
+const actions = { setFormData, handleAddingPost, handleUpdatingPost, resetFormData, setGenericModal }
 
 export default connect(mapStateToProps, actions)(PostForm)
 

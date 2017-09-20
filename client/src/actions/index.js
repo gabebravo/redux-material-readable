@@ -7,6 +7,11 @@ export const setPosts = posts => ({
   posts
 })
 
+export const SET_EDIT_POST = 'SET_EDIT_POST';
+export const setEditPost = post => ({
+  type: SET_EDIT_POST, post
+})
+
 export const ADD_POST = 'ADD_POST';
 export const addPost = post => {
   return ({
@@ -15,7 +20,7 @@ export const addPost = post => {
   })
 }
 
-export const handleAddingPost = (postBody) => {
+export const handleAddingPost = postBody => {
   return (dispatch) => {
     axios({
       method: 'post',
@@ -24,6 +29,25 @@ export const handleAddingPost = (postBody) => {
       data: postBody
     }).then( response => dispatch(addPost(response.data)))
     .catch( response => console.log(response.error))
+  }
+}
+
+export const UPDATE_POST_DATA = 'UPDATE_POST_DATA'
+export const updatePostData = updatedPost => {
+  return ({
+    type: UPDATE_POST_DATA,
+    updatedPost
+  })
+}
+
+export const handleUpdatingPost = postBody => {
+  return (dispatch) => {
+    axios({
+      method: 'put',
+      url: `http://localhost:3001/posts/${postBody.id}`,
+      headers: { 'Authorization': 'readable' },
+      data: postBody
+    }).then( response => dispatch(updatePostData(response.data)))
   }
 }
 
