@@ -71,6 +71,19 @@ export const handlePostScore = (id, score, isIncFlag) => {
   }
 }
 
+export const SET_REDIRECT_MODAL = 'SET_REDIRECT_MODAL';
+export const setRedirectModal = isOpen => ({
+  type: SET_REDIRECT_MODAL, isOpen
+})
+
+export const deletePost = (id, isOpen) => {
+  return (dispatch) => {
+    axios.delete(`http://localhost:3001/posts/${id}`, {
+      headers: { 'Authorization': 'readable' }
+    }).then( response => dispatch(setRedirectModal(isOpen)))
+  }
+}
+
 // COMMENT ACTIONS & ACTION CREATORS
 export const SET_COMMENTS = 'SET_COMMENTS';
 export const setComments = comments => ({

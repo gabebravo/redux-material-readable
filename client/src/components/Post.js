@@ -1,4 +1,6 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { deletePost } from '../actions'
 import {Card, CardHeader, CardActions, CardText} from 'material-ui/Card'
 import Chip from 'material-ui/Chip'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -29,7 +31,7 @@ const btnStlyes = {
 }
 
 const Post = ({ id, incrementScore, decrementScore, title, timestamp, author, 
-  category, comments, voteScore, body, btnArr = false }) => (
+  category, comments, voteScore, body, btnArr = false, deletePost, redirectModal }) => (
   <Card>
     <CardHeader
       title={title}
@@ -52,7 +54,7 @@ const Post = ({ id, incrementScore, decrementScore, title, timestamp, author,
         btnArr && 
         (<div style={{ display: 'inline' }}>
           <Link to={`/post-edit/${id}`}><RaisedButton label="Edit" secondary={true} style={btnStlyes} /></Link>
-          <RaisedButton label="Delete" secondary={true} style={btnStlyes} />
+          <RaisedButton onClick={() => deletePost(id, redirectModal.isOpen)} label="Delete" secondary={true} style={btnStlyes} />
         </div>)
       }
     </div>
@@ -60,4 +62,6 @@ const Post = ({ id, incrementScore, decrementScore, title, timestamp, author,
   </Card>
 );
 
-export default Post;
+const mapPropsToState = ({ redirectModal }) => ({ redirectModal })
+const actions = { deletePost }
+export default connect(mapPropsToState, actions)(Post);

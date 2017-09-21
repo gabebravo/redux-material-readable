@@ -2,7 +2,7 @@
 import { combineReducers } from 'redux';
 import { SET_POSTS, ADD_POST, UPDATE_POST_SCORE, SET_COMMENTS, SET_CATEGORIES, 
    SET_FORM_DATA, SET_FILTER_DROPDOWN, UPDATE_COMMENT_SCORE, SET_ADD_COMMENT_MODAL, 
-   RESET_FORM, SET_GENERIC_MODAL, SET_EDIT_POST, UPDATE_POST_DATA
+   RESET_FORM, SET_GENERIC_MODAL, SET_EDIT_POST, UPDATE_POST_DATA, SET_REDIRECT_MODAL
  } from '../actions' // IMPORT THE ACTIONS
 
 const posts = (state = {}, action) => {
@@ -65,6 +65,20 @@ const categories = (state = [], action) => {
   }
 }
 
+const formData = (state = {}, action) => {
+  const { key, val } = action;
+  switch (action.type) { 
+    case SET_FORM_DATA: 
+    return Object.assign({}, state, {
+      [`${key}`]: val
+    })
+    case RESET_FORM :
+    return Object.assign({}, {}, {})
+    default:
+      return state;
+  }
+}
+
 const filterDropdown = (state = { numValue: 1}, action) => {
   switch (action.type) { 
     case SET_FILTER_DROPDOWN: 
@@ -98,15 +112,12 @@ const genericModal = (state = { isOpen: false}, action) => {
   }
 }
 
-const formData = (state = {}, action) => {
-  const { key, val } = action;
-  switch (action.type) { 
-    case SET_FORM_DATA: 
-    return Object.assign({}, state, {
-      [`${key}`]: val
-    })
-    case RESET_FORM :
-    return Object.assign({}, {}, {})
+const redirectModal = (state = { isOpen: false}, action) => {
+  switch( action.type ){
+    case SET_REDIRECT_MODAL :
+      return Object.assign({}, state, {
+        isOpen: !action.isOpen
+      })
     default:
       return state;
   }
@@ -114,5 +125,5 @@ const formData = (state = {}, action) => {
 
 export default combineReducers({
   posts, comments, categories, filterDropdown, formData, 
-    commentModal, genericModal, editPost
+    commentModal, genericModal, editPost, redirectModal
 });

@@ -13,6 +13,7 @@ class PostList extends Component {
   printPosts = arr => {
     const countIds = getCommentsCount(this.props.comments);
     return arr.map( (post, index) => {
+      if(post.deleted === true) { return <div key={index}></div>}
       return (
         <Post 
           key={index}

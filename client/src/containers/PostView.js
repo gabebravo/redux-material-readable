@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import { handlePostScore, setAddCommentModal } from '../actions'
 import { getCommentsCount } from '../utils'
 import Header from '../components/Header'
@@ -11,6 +12,7 @@ import FilterDropdown from '../components/FilterDropdown'
 import AddButton from '../components/AddButton'
 import CommentList from '../components/CommentList'
 import FormModal from '../components/FormModal'
+import RedirectModal from '../components/RedirectModal'
 const moment = require('moment');
 
 const titleStyles = {
@@ -26,9 +28,15 @@ const titleStyles = {
 
 class PostView extends Component {
 
-  toggle = () => {
+  toggleFormModal = () => {
     this.props.setAddCommentModal(!this.props.commentModal.isOpen);
   };
+
+  handleRedirectModal = () => {
+    if(window.location.pathname !== "/"){
+      this.props.history.push("/");
+    }
+  }
 
   convertUnixToDate = timestamp => moment(new Date().setTime(timestamp)).format("MM/DD/YYYY");
 
@@ -71,7 +79,7 @@ class PostView extends Component {
           <div className="col-xs-12 col-sm-3">
             <FilterDropdown filterType="comments" />
           </div>
-          <div onClick={this.toggle} className="col-xs-12 col-sm-2" style={{ marginTop: '1.6rem' }}>
+          <div onClick={this.toggleFormModal} className="col-xs-12 col-sm-2" style={{ marginTop: '1.6rem' }}>
             <AddButton btnText="Add Comments"/>
           </div>
         </div>
@@ -80,13 +88,16 @@ class PostView extends Component {
           <CommentList comments={this.props.comments} id={match.params.id} /> : 
           <Spinner />
         }
-      <FormModal show={this.props.commentModal.isOpen} modalHandler={this.toggle} />
+      <FormModal show={this.props.commentModal.isOpen} modalHandler={this.toggleFormModal} />
+      <RedirectModal title="Success" text={"You have deleted an old post. Good job. Click OK to be redirected to the homepage."} 
+        show={this.props.redirectModal.isOpen} modalHandler={this.handleRedirectModal}
+      />
       </div>
       </MuiThemeProvider>
     )
   }
 }
 
-const mapStateToProps = ({ posts, comments, commentModal }) => ({ posts, comments, commentModal });
+const mapStateToProps = ({ posts, comments, commentModal, redirectModal }) => ({ posts, comments, commentModal, redirectModal });
 const actions = { handlePostScore, setAddCommentModal }
-export default connect(mapStateToProps, actions)(PostView)
+export default withRouter(connect(mapStateToProps, actions)(PostView))
