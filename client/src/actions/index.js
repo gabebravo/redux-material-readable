@@ -136,8 +136,8 @@ export const resetFormData = () => ({
 })
 
 export const SET_ADD_COMMENT_MODAL = 'SET_ADD_COMMENT_MODAL';
-export const setAddCommentModal = isOpen => ({
-  type: SET_ADD_COMMENT_MODAL, isOpen
+export const setAddCommentModal = (isOpen, formType) => ({
+  type: SET_ADD_COMMENT_MODAL, isOpen, formType
 })
 
 export const SET_GENERIC_MODAL = 'SET_GENERIC_MODAL';

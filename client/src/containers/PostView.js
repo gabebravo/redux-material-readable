@@ -29,7 +29,7 @@ const titleStyles = {
 class PostView extends Component {
 
   toggleFormModal = () => {
-    this.props.setAddCommentModal(!this.props.commentModal.isOpen);
+    this.props.setAddCommentModal(!this.props.commentModal.isOpen, "add");
   };
 
   handleRedirectModal = () => {

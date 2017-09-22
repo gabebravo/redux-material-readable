@@ -1,4 +1,6 @@
 import React, {Component} from 'react'
+import { connect } from 'react-redux'
+import { setAddCommentModal } from '../actions'
 import Dialog from 'material-ui/Dialog'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
@@ -12,8 +14,9 @@ const styles = {
 }
 
 class FormModal extends Component {
-  
+
   render() {
+    console.log(this.props.commentModal.formType)
     const actions = [
       <FlatButton
         label="Cancel"
@@ -47,7 +50,9 @@ class FormModal extends Component {
   }
 }
 
-export default FormModal
+const mapStateToProps = ({ commentModal }) => ({ commentModal })
+const actions = { setAddCommentModal }
+export default connect(mapStateToProps, actions)(FormModal)
 
 // id: Any unique ID. As with posts, UUID is probably the best here.
 // timestamp: timestamp. Get this however you want.

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { handleCommentScore } from '../actions'
+import { handleCommentScore, setAddCommentModal } from '../actions'
 import {Card, CardTitle, CardActions, CardText} from 'material-ui/Card'
 import Chip from 'material-ui/Chip'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -26,6 +26,11 @@ const btnStlyes = {
 }
 
 class Comment extends Component {
+
+  toggle = () => {
+    this.props.setAddCommentModal(!this.props.commentModal.isOpen, "edit");
+  }
+
   render() {
     const { id, parentId, timestamp, body, author, voteScore } = this.props;
     return (
@@ -38,7 +43,7 @@ class Comment extends Component {
         <CardActions>
           <RaisedButton onClick={() => this.props.handleCommentScore(id, voteScore, true)} label="Score" secondary={true} style={btnStlyes} icon={<AddIcon/>} />
           <RaisedButton onClick={() => this.props.handleCommentScore(id, voteScore, false)} label="Score" secondary={true} style={btnStlyes} icon={<RemoveIcon/>} />
-          <RaisedButton label="Edit" secondary={true} style={btnStlyes} />
+          <RaisedButton label="Edit" onClick={this.toggle} secondary={true} style={btnStlyes} />
           <RaisedButton label="Delete" secondary={true} style={btnStlyes} />
         </CardActions>
       </Card>
@@ -46,5 +51,6 @@ class Comment extends Component {
   }
 }
 
-const actions = { handleCommentScore }
-export default connect(null, actions)(Comment);
+const mapStateToProps = ({ commentModal }) => ({ commentModal })
+const actions = { handleCommentScore, setAddCommentModal }
+export default connect(mapStateToProps, actions)(Comment);
