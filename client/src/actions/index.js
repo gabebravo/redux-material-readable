@@ -135,6 +135,14 @@ export const resetFormData = () => ({
   type: RESET_FORM
 })
 
+export const SET_COMMENT_FORM = 'SET_COMMENT_FORM';
+export const setCommentForm = dataObj => {
+  return {
+    type: SET_COMMENT_FORM,
+    dataObj
+  }
+}
+
 export const SET_ADD_COMMENT_MODAL = 'SET_ADD_COMMENT_MODAL';
 export const setAddCommentModal = (isOpen, formType) => ({
   type: SET_ADD_COMMENT_MODAL, isOpen, formType

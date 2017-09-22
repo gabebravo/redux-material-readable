@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { setAddCommentModal } from '../actions'
+import { setAddCommentModal, setCommentForm } from '../actions'
 import Dialog from 'material-ui/Dialog'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
+const uuidv4 = require('uuid/v4');
 
 const styles = {
   form: {
@@ -15,8 +16,24 @@ const styles = {
 
 class FormModal extends Component {
 
+  componentDidMount() {
+    if ( this.props.commentModal.formType === 'add') {
+      this.props.setCommentForm({
+        'id': uuidv4().split('-').join('').toString(), 
+        'timestamp': Date.now(),
+        'voteScore': 1
+      });
+    } else if ( this.props.commentModal.formType === 'edit') {
+      console.log('inside did mount and edit was clicked')
+    }
+  }
+
+  handleTextFields = (event, index, value) => {
+    this.props.setCommentForm({ [`${event.target.id}`]: event.target.value} )
+  }
+
   render() {
-    console.log(this.props.commentModal.formType)
+
     const actions = [
       <FlatButton
         label="Cancel"
@@ -41,8 +58,8 @@ class FormModal extends Component {
           autoScrollBodyContent={true}
         >
         <div style={styles.form}>
-          <TextField type="text" onChange={() => console.log('author changed')} id="author" name="author" hintText="Enter Author" />
-          <TextField type="text" onChange={() => console.log('text changed')} id="text" name="text" hintText="Enter Text" />
+          <TextField type="text" value={this.props.commentForm.author || ''} onChange={this.handleTextFields} id="author" name="author" hintText="Enter Author" />
+          <TextField type="text" value={this.props.commentForm.body || ''} onChange={this.handleTextFields} id="body" name="body" hintText="Enter Text" />
         </div>
         </Dialog>
       </div>
@@ -50,8 +67,8 @@ class FormModal extends Component {
   }
 }
 
-const mapStateToProps = ({ commentModal }) => ({ commentModal })
-const actions = { setAddCommentModal }
+const mapStateToProps = ({ commentModal, commentForm }) => ({ commentModal, commentForm })
+const actions = { setAddCommentModal, setCommentForm }
 export default connect(mapStateToProps, actions)(FormModal)
 
 // id: Any unique ID. As with posts, UUID is probably the best here.
