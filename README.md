@@ -1,5 +1,20 @@
-# Readable API Server
 
+# Readable React/Redux Client
+## Installation
+* Download the project from the github repo or use the git clone command via terminal
+* Navigate into the ./client project folder that has the package.json file
+* Run the command npm install and wait for all the packages to finish installing
+* From this same root directory in terminal, run "npm start" to launch the app
+* The browser should open a new tab to localhost:3000 where the app is running
+* See the instrucitons below the next section for installing and launching the node server.
+
+## SPECIAL NOTE
+* There 2 different version of the specs for the project.
+* PLEASE NOTE : the Project Overview and the Rubric DO NOT MATCH
+* For this reason, I used the Porject Overview, which gave a detailed breakdown of what each view and piece of data should be.
+
+
+# Readable API Server
 ## Installation
 
 Install packages: `npm install`
