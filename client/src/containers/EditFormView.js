@@ -6,7 +6,6 @@ import { setGenericModal, setFormData } from '../actions'
 import Header from '../components/Header'
 import PostForm from '../components/PostForm'
 import GenericModal from '../components/GenericModal'
-import Spinner from '../components/Spinner'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 class EditFormView extends Component {
@@ -29,7 +28,6 @@ class EditFormView extends Component {
   }
 
   render() { 
-  // const form = this.props.formData.id ? <PostForm type="edit" />: <Spinner />
     return (
       <MuiThemeProvider>
         <div>

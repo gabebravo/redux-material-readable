@@ -61,12 +61,10 @@ export const sortArray = (postsArr, sortType) => {
       return arr.sort( (a, b) => {
         if ( a.voteScore < b.voteScore ) { return 1 } else if ( a.voteScore > b.voteScore ) { return - 1 } return 0
       });
-      break;
     case 'date' :
       return arr.sort( (a, b) => {
         if ( a.timestamp < b.timestamp ) { return 1 } else if ( a.timestamp > b.timestamp ) { return - 1 } return 0
       });
-      break;
     default:
   }
 }

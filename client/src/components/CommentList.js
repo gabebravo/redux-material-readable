@@ -9,7 +9,6 @@ const printComments = (arr, id) => {
       <Comment 
         key={index}
         id={comment.id}
-        parentId={comment.parentId}
         timestamp={comment.timestamp}
         body={comment.body}
         author={comment.author}

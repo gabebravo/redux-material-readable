@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { handleCommentScore, setAddCommentModal, handleCommentDelete, setCommentForm } from '../actions'
-import axios from 'axios';
 import {Card, CardTitle, CardActions, CardText} from 'material-ui/Card'
 import Chip from 'material-ui/Chip'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -38,7 +37,7 @@ class Comment extends Component {
   }
 
   render() {
-    const { id, parentId, timestamp, body, author, voteScore } = this.props;
+    const { id, timestamp, body, author, voteScore } = this.props;
     return (
       <Card>
         <CardTitle title={author} subtitle={convertUnixToDate(timestamp)} />
