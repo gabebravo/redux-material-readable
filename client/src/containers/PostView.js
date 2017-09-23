@@ -89,7 +89,7 @@ class PostView extends Component {
           <CommentList comments={this.props.comments} id={match.params.id} /> : 
           <Spinner />
         }
-      <FormModal show={this.props.commentModal.isOpen} modalHandler={this.toggleFormModal} />
+      <FormModal parentId={match.params.id} show={this.props.commentModal.isOpen} modalHandler={this.toggleFormModal} />
       <RedirectModal title="Success" text={"You have deleted an old post. Good job. Click OK to be redirected to the homepage."} 
         show={this.props.redirectModal.isOpen} modalHandler={this.handleRedirectModal}
       />

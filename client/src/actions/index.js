@@ -91,6 +91,26 @@ export const setComments = comments => ({
   comments
 });
 
+export const ADD_COMMENT = 'ADD_COMMENT';
+export const addComment = newComment => {
+  return ({
+    type: ADD_COMMENT, 
+    newComment
+  });
+}
+
+export const handleAddingComment = postBody => {
+  return (dispatch) => {
+    axios({
+      method: 'post',
+      url: `http://localhost:3001/comments`,
+      headers: { 'Authorization': 'readable' },
+      data: postBody
+    }).then( response => dispatch(addComment(response.data)))
+    .catch( response => console.log(response.error))
+  }
+}
+
 export const UPDATE_COMMENT_SCORE = 'UPDATE_COMMENT_SCORE';
 export const updateCommentScore = (id, newScore) => {
   return ({
@@ -142,6 +162,11 @@ export const setCommentForm = dataObj => {
     dataObj
   }
 }
+
+export const RESET_COMMENT_FORM = 'RESET_COMMENT_FORM';
+export const resetCommentForm = () => ({
+  type: RESET_COMMENT_FORM
+})
 
 export const SET_ADD_COMMENT_MODAL = 'SET_ADD_COMMENT_MODAL';
 export const setAddCommentModal = (isOpen, formType) => ({

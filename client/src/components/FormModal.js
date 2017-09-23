@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { setAddCommentModal, setCommentForm } from '../actions'
+import { setAddCommentModal, setCommentForm, handleAddingComment, resetCommentForm } from '../actions'
 import Dialog from 'material-ui/Dialog'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
@@ -16,24 +16,34 @@ const styles = {
 
 class FormModal extends Component {
 
-  componentDidMount() {
-    if ( this.props.commentModal.formType === 'add') {
-      this.props.setCommentForm({
-        'id': uuidv4().split('-').join('').toString(), 
-        'timestamp': Date.now(),
-        'voteScore': 1
-      });
-    } else if ( this.props.commentModal.formType === 'edit') {
-      console.log('inside did mount and edit was clicked')
-    }
-  }
-
   handleTextFields = (event, index, value) => {
     this.props.setCommentForm({ [`${event.target.id}`]: event.target.value} )
   }
 
-  render() {
+  submitData = (formOperation, parentId) => { // logic to pick form operation
+    const postBody = {...this.props.commentForm}
+    postBody.id = uuidv4().split('-').join('').toString(); 
+    postBody.timestamp = Date.now();
+    postBody.voteScore = 1;
+    postBody.parentId = parentId;
 
+    this.props.handleAddingComment(postBody);
+    this.props.resetCommentForm();
+
+    // this.props.setCommentForm({id: uuidv4().split('-').join('').toString()});
+    // this.props.setCommentForm({ timestamp: Date.now() });
+    // this.props.setCommentForm({ voteScore: 1 });
+
+    // if( formOperation === 'add' ) {
+    //   this.props.handleAddingPost(this.props.formData);
+    // } else if ( formOperation === 'edit' ) {
+    //   this.props.handleUpdatingPost(this.props.formData);
+    // }
+    // this.props.resetFormData();
+    // this.props.setGenericModal( this.props.isOpen )
+  }
+
+  render() {
     const actions = [
       <FlatButton
         label="Cancel"
@@ -43,7 +53,7 @@ class FormModal extends Component {
       <FlatButton
         label="Submit"
         primary={true}
-        onClick={this.props.modalHandler}
+        onClick={ () => { this.props.modalHandler(); this.submitData('add', this.props.parentId); }}
       />,
     ];
 
@@ -68,7 +78,7 @@ class FormModal extends Component {
 }
 
 const mapStateToProps = ({ commentModal, commentForm }) => ({ commentModal, commentForm })
-const actions = { setAddCommentModal, setCommentForm }
+const actions = { setAddCommentModal, setCommentForm, handleAddingComment, resetCommentForm }
 export default connect(mapStateToProps, actions)(FormModal)
 
 // id: Any unique ID. As with posts, UUID is probably the best here.
