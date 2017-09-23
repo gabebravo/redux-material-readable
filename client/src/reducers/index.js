@@ -1,7 +1,7 @@
 // IMPORT COMBINEREDUCERS FROM REDUX 
 import { combineReducers } from 'redux';
-import { SET_POSTS, ADD_POST, UPDATE_POST_SCORE, SET_COMMENTS, ADD_COMMENT, SET_CATEGORIES, 
-   SET_FORM_DATA, SET_FILTER_DROPDOWN, UPDATE_COMMENT_SCORE, SET_ADD_COMMENT_MODAL, 
+import { SET_POSTS, ADD_POST, UPDATE_POST_SCORE, SET_COMMENTS, ADD_COMMENT, DELETE_COMMENT, 
+    SET_CATEGORIES, SET_FORM_DATA, SET_FILTER_DROPDOWN, UPDATE_COMMENT_SCORE, SET_ADD_COMMENT_MODAL, 
    RESET_FORM, SET_GENERIC_MODAL, SET_EDIT_POST, UPDATE_POST_DATA, SET_REDIRECT_MODAL,
    SET_COMMENT_FORM, RESET_COMMENT_FORM
  } from '../actions' // IMPORT THE ACTIONS
@@ -43,6 +43,10 @@ const comments = (state = {}, action) => {
     case SET_COMMENTS: 
       return action.comments;
     case ADD_COMMENT: return [...state, action.newComment];
+    case DELETE_COMMENT: {
+      const filteredState = [...state].filter( comment => comment.id === action.deletedComment.id )
+        return [...filteredState, action.deletedComment];
+    }
     case UPDATE_COMMENT_SCORE: {
       return [...state].map( comment => {
         if(comment.id === action.id){

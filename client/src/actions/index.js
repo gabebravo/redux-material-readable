@@ -111,6 +111,22 @@ export const handleAddingComment = postBody => {
   }
 }
 
+export const DELETE_COMMENT = 'DELETE_COMMENT';
+export const deleteComment = deletedComment => {
+  return ({
+    type: DELETE_COMMENT, deletedComment
+  })
+}
+
+export const handleCommentDelete = id => {
+  return (dispatch) => {
+    axios.delete(`http://localhost:3001/comments/${id}`, {
+      headers: { 'Authorization': 'readable' }
+    }).then( response => dispatch(deleteComment(response.data)))
+    .catch( response => console.log(response.error))
+  }
+}
+
 export const UPDATE_COMMENT_SCORE = 'UPDATE_COMMENT_SCORE';
 export const updateCommentScore = (id, newScore) => {
   return ({

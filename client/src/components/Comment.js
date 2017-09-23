@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { handleCommentScore, setAddCommentModal } from '../actions'
+import { handleCommentScore, setAddCommentModal, handleCommentDelete } from '../actions'
+import axios from 'axios';
 import {Card, CardTitle, CardActions, CardText} from 'material-ui/Card'
 import Chip from 'material-ui/Chip'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -44,7 +45,7 @@ class Comment extends Component {
           <RaisedButton onClick={() => this.props.handleCommentScore(id, voteScore, true)} label="Score" secondary={true} style={btnStlyes} icon={<AddIcon/>} />
           <RaisedButton onClick={() => this.props.handleCommentScore(id, voteScore, false)} label="Score" secondary={true} style={btnStlyes} icon={<RemoveIcon/>} />
           <RaisedButton label="Edit" onClick={this.toggle} secondary={true} style={btnStlyes} />
-          <RaisedButton label="Delete" secondary={true} style={btnStlyes} />
+          <RaisedButton label="Delete" onClick={() => this.props.handleCommentDelete(id)} secondary={true} style={btnStlyes} />
         </CardActions>
       </Card>
     );
@@ -52,5 +53,5 @@ class Comment extends Component {
 }
 
 const mapStateToProps = ({ commentModal }) => ({ commentModal })
-const actions = { handleCommentScore, setAddCommentModal }
+const actions = { handleCommentScore, setAddCommentModal, handleCommentDelete }
 export default connect(mapStateToProps, actions)(Comment);
