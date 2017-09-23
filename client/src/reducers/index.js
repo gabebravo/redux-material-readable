@@ -107,12 +107,13 @@ const filterDropdown = (state = { numValue: 1}, action) => {
   }
 }
 
-const commentModal = (state = { isOpen: false, formType: "" }, action) => {
+const commentModal = (state = { isOpen: false, formType: "", commentId: null }, action) => {
   switch (action.type) { 
     case SET_ADD_COMMENT_MODAL:
       return Object.assign({}, state, {
         isOpen: action.isOpen, 
-        formType: action.formType
+        formType: action.formType,
+        commentId: action.commentId
       }) 
     default:
       return state;

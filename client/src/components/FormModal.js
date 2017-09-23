@@ -44,6 +44,7 @@ class FormModal extends Component {
   }
 
   render() {
+
     const actions = [
       <FlatButton
         label="Cancel"
@@ -68,7 +69,7 @@ class FormModal extends Component {
           autoScrollBodyContent={true}
         >
         <div style={styles.form}>
-          <TextField type="text" value={this.props.commentForm.author || ''} onChange={this.handleTextFields} id="author" name="author" hintText="Enter Author" />
+          <TextField type="text" disabled={ this.props.commentModal.formType === 'edit' ? true: false} value={this.props.commentForm.author || ''} onChange={this.handleTextFields} id="author" name="author" hintText="Enter Author" />
           <TextField type="text" value={this.props.commentForm.body || ''} onChange={this.handleTextFields} id="body" name="body" hintText="Enter Text" />
         </div>
         </Dialog>
@@ -80,9 +81,3 @@ class FormModal extends Component {
 const mapStateToProps = ({ commentModal, commentForm }) => ({ commentModal, commentForm })
 const actions = { setAddCommentModal, setCommentForm, handleAddingComment, resetCommentForm }
 export default connect(mapStateToProps, actions)(FormModal)
-
-// id: Any unique ID. As with posts, UUID is probably the best here.
-// timestamp: timestamp. Get this however you want.
-// body: String
-// owner: String
-// parentId: Should match a post id in the database.

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { handleCommentScore, setAddCommentModal, handleCommentDelete } from '../actions'
+import { handleCommentScore, setAddCommentModal, handleCommentDelete, setCommentForm } from '../actions'
 import axios from 'axios';
 import {Card, CardTitle, CardActions, CardText} from 'material-ui/Card'
 import Chip from 'material-ui/Chip'
@@ -29,7 +29,11 @@ const btnStlyes = {
 class Comment extends Component {
 
   toggle = () => {
-    this.props.setAddCommentModal(!this.props.commentModal.isOpen, "edit");
+    const editComment = this.props.comments.filter( comment => comment.id === this.props.id)[0];
+    this.props.setCommentForm({ id: editComment.id })
+    this.props.setCommentForm({ timestamp: editComment.timestamp })
+    this.props.setCommentForm({ body: editComment.body })
+    this.props.setAddCommentModal(!this.props.commentModal.isOpen, "edit", this.props.id);
   }
 
   render() {
@@ -52,6 +56,6 @@ class Comment extends Component {
   }
 }
 
-const mapStateToProps = ({ commentModal }) => ({ commentModal })
-const actions = { handleCommentScore, setAddCommentModal, handleCommentDelete }
+const mapStateToProps = ({ commentModal, comments }) => ({ commentModal, comments })
+const actions = { handleCommentScore, setAddCommentModal, handleCommentDelete, setCommentForm }
 export default connect(mapStateToProps, actions)(Comment);

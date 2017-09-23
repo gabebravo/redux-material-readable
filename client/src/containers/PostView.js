@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { handlePostScore, setAddCommentModal } from '../actions'
+import { handlePostScore, setAddCommentModal, resetCommentForm } from '../actions'
 import { getCommentsCount } from '../utils'
 import Header from '../components/Header'
 import Spinner from '../components/Spinner'
@@ -30,7 +30,8 @@ class PostView extends Component {
 
   toggleFormModal = () => {
     const modalType = this.props.commentModal.isOpen ? "" : "add";
-    this.props.setAddCommentModal(!this.props.commentModal.isOpen, modalType);
+    this.props.setAddCommentModal(!this.props.commentModal.isOpen, modalType, null);
+    this.props.resetCommentForm();
   };
 
   handleRedirectModal = () => {
@@ -100,5 +101,5 @@ class PostView extends Component {
 }
 
 const mapStateToProps = ({ posts, comments, commentModal, redirectModal }) => ({ posts, comments, commentModal, redirectModal });
-const actions = { handlePostScore, setAddCommentModal }
+const actions = { handlePostScore, setAddCommentModal, resetCommentForm }
 export default withRouter(connect(mapStateToProps, actions)(PostView))
