@@ -31,8 +31,9 @@ class Comment extends Component {
   toggle = () => {
     const editComment = this.props.comments.filter( comment => comment.id === this.props.id)[0];
     this.props.setCommentForm({ id: editComment.id })
-    this.props.setCommentForm({ timestamp: editComment.timestamp })
+    this.props.setCommentForm({ timestamp: Date.now() })
     this.props.setCommentForm({ body: editComment.body })
+    this.props.setCommentForm({ author: editComment.author })
     this.props.setAddCommentModal(!this.props.commentModal.isOpen, "edit", this.props.id);
   }
 

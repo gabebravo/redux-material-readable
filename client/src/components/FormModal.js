@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { setAddCommentModal, setCommentForm, handleAddingComment, resetCommentForm } from '../actions'
+import { setAddCommentModal, setCommentForm, handleAddingComment, 
+  handleUpdatingComment, resetCommentForm } from '../actions'
 import Dialog from 'material-ui/Dialog'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
@@ -20,27 +21,19 @@ class FormModal extends Component {
     this.props.setCommentForm({ [`${event.target.id}`]: event.target.value} )
   }
 
-  submitData = (formOperation, parentId) => { // logic to pick form operation
+  submitData = (parentId = null) => { // logic to pick form operation
     const postBody = {...this.props.commentForm}
-    postBody.id = uuidv4().split('-').join('').toString(); 
-    postBody.timestamp = Date.now();
-    postBody.voteScore = 1;
-    postBody.parentId = parentId;
 
-    this.props.handleAddingComment(postBody);
+    if( this.props.commentModal.formType === 'add' ) {
+      postBody.id = uuidv4().split('-').join('').toString(); 
+      postBody.timestamp = Date.now();
+      postBody.voteScore = 1;
+      postBody.parentId = parentId;
+      this.props.handleAddingComment(postBody);
+    } else if ( this.props.commentModal.formType === 'edit' ) {
+      this.props.handleUpdatingComment(postBody);
+    }
     this.props.resetCommentForm();
-
-    // this.props.setCommentForm({id: uuidv4().split('-').join('').toString()});
-    // this.props.setCommentForm({ timestamp: Date.now() });
-    // this.props.setCommentForm({ voteScore: 1 });
-
-    // if( formOperation === 'add' ) {
-    //   this.props.handleAddingPost(this.props.formData);
-    // } else if ( formOperation === 'edit' ) {
-    //   this.props.handleUpdatingPost(this.props.formData);
-    // }
-    // this.props.resetFormData();
-    // this.props.setGenericModal( this.props.isOpen )
   }
 
   render() {
@@ -54,7 +47,7 @@ class FormModal extends Component {
       <FlatButton
         label="Submit"
         primary={true}
-        onClick={ () => { this.props.modalHandler(); this.submitData('add', this.props.parentId); }}
+        onClick={ () => { this.props.modalHandler(); this.submitData(this.props.parentId); }}
       />,
     ];
 
@@ -69,7 +62,8 @@ class FormModal extends Component {
           autoScrollBodyContent={true}
         >
         <div style={styles.form}>
-          <TextField type="text" disabled={ this.props.commentModal.formType === 'edit' ? true: false} value={this.props.commentForm.author || ''} onChange={this.handleTextFields} id="author" name="author" hintText="Enter Author" />
+          <TextField type="text" disabled={ this.props.commentModal.formType === 'edit' ? true: false} value={this.props.commentForm.author || ''} 
+            onChange={this.handleTextFields} id="author" name="author" hintText={ this.props.commentModal.formType === 'edit' ? this.props.commentForm.author: "Enter Author" } />
           <TextField type="text" value={this.props.commentForm.body || ''} onChange={this.handleTextFields} id="body" name="body" hintText="Enter Text" />
         </div>
         </Dialog>
@@ -79,5 +73,5 @@ class FormModal extends Component {
 }
 
 const mapStateToProps = ({ commentModal, commentForm }) => ({ commentModal, commentForm })
-const actions = { setAddCommentModal, setCommentForm, handleAddingComment, resetCommentForm }
+const actions = { setAddCommentModal, setCommentForm, handleAddingComment, resetCommentForm, handleUpdatingComment }
 export default connect(mapStateToProps, actions)(FormModal)

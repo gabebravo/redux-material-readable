@@ -127,6 +127,26 @@ export const handleCommentDelete = id => {
   }
 }
 
+export const UPDATE_COMMENT = 'UPDATE_COMMENT';
+export const updateComment = updatedComment => {
+  return ({
+    type: UPDATE_COMMENT,
+    updatedComment
+  })
+}
+
+export const handleUpdatingComment = postBody => {
+  return (dispatch) => {
+    axios({
+      method: 'put',
+      url: `http://localhost:3001/comments/${postBody.id}`,
+      headers: { 'Authorization': 'readable' },
+      data: postBody
+    }).then( response => dispatch(updateComment(response.data)))
+    .catch( response => console.log(response.error))
+  }
+}
+
 export const UPDATE_COMMENT_SCORE = 'UPDATE_COMMENT_SCORE';
 export const updateCommentScore = (id, newScore) => {
   return ({
