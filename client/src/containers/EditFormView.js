@@ -11,7 +11,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 class EditFormView extends Component {
 
   toggle = () => {
-    this.props.setGenericModal( this.props.genericModal.isOpen )
+    this.props.setGenericModal( this.props.genericModal.isOpen, false )
   };
 
   componentDidMount(){
@@ -28,14 +28,19 @@ class EditFormView extends Component {
   }
 
   render() { 
+    const genericModal = this.props.genericModal.hasError ?
+      <GenericModal title="Error" text={"You have not filled out all the fields. Please make sure they are all filled out and re-submit."} 
+        show={this.props.genericModal.isOpen || false} modalHandler={this.toggle}
+      /> :
+      <GenericModal title="Success" text={"You have saved a new post. Good job. It will now appear on the homepage."} 
+        show={this.props.genericModal.isOpen || false} modalHandler={this.toggle}
+      />
     return (
       <MuiThemeProvider>
         <div>
           <Header />
           <PostForm type="edit" />
-          <GenericModal title="Success" text={"You have saved a new post. Good job. It will now appear on the homepage."} 
-            show={this.props.genericModal.isOpen || false} modalHandler={this.toggle}
-          />
+          {genericModal}
         </div>
       </MuiThemeProvider>
     )

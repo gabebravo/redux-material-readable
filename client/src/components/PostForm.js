@@ -48,13 +48,18 @@ export class PostForm extends Component {
   }
 
   submitData = formOperation => { // logic to pick form operation
-    if( formOperation === 'add' ) {
-      this.props.handleAddingPost(this.props.formData);
-    } else if ( formOperation === 'edit' ) {
-      this.props.handleUpdatingPost(this.props.formData);
+    if ( this.props.formData.title === undefined || this.props.formData.body === undefined || 
+        this.props.formData.author === undefined || this.props.formData.category === undefined ) {
+        this.props.setGenericModal( this.props.isOpen, true )
+    } else {
+      if( formOperation === 'add' ) {
+        this.props.handleAddingPost(this.props.formData);
+      } else if ( formOperation === 'edit' ) {
+        this.props.handleUpdatingPost(this.props.formData);
+      }
+      this.props.resetFormData();
+      this.props.setGenericModal( this.props.isOpen, false )
     }
-    this.props.resetFormData();
-    this.props.setGenericModal( this.props.isOpen )
   }
 
   render() {

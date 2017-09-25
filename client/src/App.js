@@ -6,6 +6,7 @@ import CategoryPage from './containers/CategoryView'
 import PostPage from './containers/PostView'
 import AddPostPage from './containers/FormView'
 import EditPostPage from './containers/EditFormView'
+import NotFoundPage from './components/Page404'
 
 class App extends Component {
   render() {
@@ -17,6 +18,7 @@ class App extends Component {
           <Route path='/post-info/:id' component={PostPage} />
           <Route path='/post-form' component={AddPostPage} />
           <Route path='/post-edit/:id' component={EditPostPage} />
+          <Route path='/not-found' component={NotFoundPage} />
         </Switch>
       </Router>
     );

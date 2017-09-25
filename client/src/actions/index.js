@@ -210,6 +210,6 @@ export const setAddCommentModal = (isOpen, formType, commentId) => ({
 })
 
 export const SET_GENERIC_MODAL = 'SET_GENERIC_MODAL';
-export const setGenericModal = isOpen => ({
-  type: SET_GENERIC_MODAL, isOpen
+export const setGenericModal = (isOpen, hasError) => ({
+  type: SET_GENERIC_MODAL, isOpen, hasError
 })

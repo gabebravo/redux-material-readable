@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Redirect } from 'react-router-dom'
 import { handlePostScore, setAddCommentModal, resetCommentForm } from '../actions'
 import { getCommentsCount } from '../utils'
 import Header from '../components/Header'
@@ -63,6 +63,8 @@ class PostView extends Component {
   }
 
   render() {
+    const redirect = this.props.match.params.id === undefined || [...this.props.posts].length === 0 ?
+    <Redirect to={{ pathname: '/not-found'}}/>: '';
     const {posts, comments, match } = this.props;
     const mainPost = Array.isArray(this.props.posts) 
       && Array.isArray(this.props.comments) ?
@@ -71,6 +73,7 @@ class PostView extends Component {
     return (
       <MuiThemeProvider>
       <div>
+      {redirect}
         <Header />
         <h4 style={titleStyles}>Post Info</h4>
         {mainPost}

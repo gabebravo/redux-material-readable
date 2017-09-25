@@ -125,11 +125,12 @@ const commentModal = (state = { isOpen: false, formType: "", commentId: null }, 
   }
 }
 
-const genericModal = (state = { isOpen: false}, action) => {
+const genericModal = (state = { isOpen: false, hasError: false }, action) => {
   switch( action.type ){
     case SET_GENERIC_MODAL :
       return Object.assign({}, state, {
-        isOpen: !action.isOpen
+        isOpen: !action.isOpen, 
+        hasError: action.hasError, 
       })
     default:
       return state;
