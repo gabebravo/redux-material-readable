@@ -10,8 +10,8 @@ const comments = require('./comments')
 
 const app = express()
 
-// app.use(express.static('client/build'));
-  app.use(express.static('public'))
+app.use(express.static('client/build'));
+// app.use(express.static('public'))
 app.use(cors())
 
 

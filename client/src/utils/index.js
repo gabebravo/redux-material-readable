@@ -16,13 +16,13 @@ export const fetchPostById = id => {
 export const fetchPostsByCategory = category => {
   return axios.get(`https://redux-readable-app.herokuapp.com/${category}/posts`, {
     headers: { 'Authorization': 'readable' }
-  }).catch( response => response.end() )
+  })
 }
 
 export const fetchComment = id => {
   return axios.get(`https://redux-readable-app.herokuapp.com/${id}/comments`, {
     headers: { 'Authorization': 'readable' }
-  }).catch( response => response.end() )
+  })
 }
 
 export const fetchComments = arr => {
