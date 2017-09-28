@@ -2,25 +2,25 @@ import axios from 'axios';
 
 // API 
 export const fetchPosts = () => {
-  return axios.get('http://localhost:3001/posts', {
+  return axios.get('https://redux-readable-app.herokuapp.com/posts', {
     headers: { 'Authorization': 'readable' }
   })
 }
 
 export const fetchPostById = id => {
-  return axios.get(`http://localhost:3001/posts/${id}`, {
+  return axios.get(`https://redux-readable-app.herokuapp.com/posts/${id}`, {
     headers: { 'Authorization': 'readable' }
   })
 }
 
 export const fetchPostsByCategory = category => {
-  return axios.get(`http://localhost:3001/${category}/posts`, {
+  return axios.get(`https://redux-readable-app.herokuapp.com/${category}/posts`, {
     headers: { 'Authorization': 'readable' }
   }).catch( response => response.end() )
 }
 
 export const fetchComment = id => {
-  return axios.get(`http://localhost:3001/posts/${id}/comments`, {
+  return axios.get(`https://redux-readable-app.herokuapp.com/${id}/comments`, {
     headers: { 'Authorization': 'readable' }
   }).catch( response => response.end() )
 }
@@ -33,7 +33,7 @@ export const fetchComments = arr => {
 }
 
 export const fetchCategories = () => {
-  return axios.get(`http://localhost:3001/categories`, {
+  return axios.get(`https://redux-readable-app.herokuapp.com/categories`, {
     headers: { 'Authorization': 'readable' }
   })
 }

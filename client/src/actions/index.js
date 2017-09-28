@@ -24,7 +24,7 @@ export const handleAddingPost = postBody => {
   return (dispatch) => {
     axios({
       method: 'post',
-      url: `http://localhost:3001/posts`,
+      url: `https://redux-readable-app.herokuapp.com/posts`,
       headers: { 'Authorization': 'readable' },
       data: postBody
     }).then( response => dispatch(addPost(response.data)))
@@ -44,7 +44,7 @@ export const handleUpdatingPost = postBody => {
   return (dispatch) => {
     axios({
       method: 'put',
-      url: `http://localhost:3001/posts/${postBody.id}`,
+      url: `https://redux-readable-app.herokuapp.com/posts/${postBody.id}`,
       headers: { 'Authorization': 'readable' },
       data: postBody
     }).then( response => dispatch(updatePostData(response.data)))
@@ -64,7 +64,7 @@ export const handlePostScore = (id, score, isIncFlag) => {
   return (dispatch) => {
     axios({
       method: 'put',
-      url: `http://localhost:3001/posts/${id}`,
+      url: `https://redux-readable-app.herokuapp.com/posts/${id}`,
       headers: { 'Authorization': 'readable' },
       data: isIncFlag ? { voteScore: (score + 1) } : { voteScore: (score - 1) }
     }).then( response => dispatch(updatePostScore(id, response.data.voteScore)))
@@ -78,7 +78,7 @@ export const setRedirectModal = isOpen => ({
 
 export const deletePost = (id, isOpen) => {
   return (dispatch) => {
-    axios.delete(`http://localhost:3001/posts/${id}`, {
+    axios.delete(`https://redux-readable-app.herokuapp.com/posts/${id}`, {
       headers: { 'Authorization': 'readable' }
     }).then( response => dispatch(setRedirectModal(isOpen)))
   }
@@ -103,7 +103,7 @@ export const handleAddingComment = postBody => {
   return (dispatch) => {
     axios({
       method: 'post',
-      url: `http://localhost:3001/comments`,
+      url: `https://redux-readable-app.herokuapp.com/comments`,
       headers: { 'Authorization': 'readable' },
       data: postBody
     }).then( response => dispatch(addComment(response.data)))
@@ -120,7 +120,7 @@ export const deleteComment = deletedComment => {
 
 export const handleCommentDelete = id => {
   return (dispatch) => {
-    axios.delete(`http://localhost:3001/comments/${id}`, {
+    axios.delete(`https://redux-readable-app.herokuapp.com/comments/${id}`, {
       headers: { 'Authorization': 'readable' }
     }).then( response => dispatch(deleteComment(response.data)))
     .catch( response => console.log(response.error))
@@ -139,7 +139,7 @@ export const handleUpdatingComment = postBody => {
   return (dispatch) => {
     axios({
       method: 'put',
-      url: `http://localhost:3001/comments/${postBody.id}`,
+      url: `https://redux-readable-app.herokuapp.com/comments/${postBody.id}`,
       headers: { 'Authorization': 'readable' },
       data: postBody
     }).then( response => dispatch(updateComment(response.data)))
@@ -159,7 +159,7 @@ export const handleCommentScore = (id, score, isIncFlag) => {
   return (dispatch) => {
     axios({
       method: 'put',
-      url: `http://localhost:3001/comments/${id}`,
+      url: `https://redux-readable-app.herokuapp.com/comments/${id}`,
       headers: { 'Authorization': 'readable' },
       data: isIncFlag ? { voteScore: (score + 1) } : { voteScore: (score - 1) }
     }).then( response => dispatch(updateCommentScore(id, response.data.voteScore)))
