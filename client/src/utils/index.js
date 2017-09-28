@@ -20,7 +20,7 @@ export const fetchPostsByCategory = category => {
 }
 
 export const fetchComment = id => {
-  return axios.get(`https://redux-readable-app.herokuapp.com/${id}/comments`, {
+  return axios.get(`https://redux-readable-app.herokuapp.com/posts/${id}/comments`, {
     headers: { 'Authorization': 'readable' }
   })
 }
